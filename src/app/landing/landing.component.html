@@ -1,0 +1,26 @@
+<div class="container-fluid content">
+  <div class="row full-height">
+    <div class="col-xs-12 welcome-container">
+      <div class="welcome-panel">
+        <h2>
+          Create. Share. Discover.
+        </h2>
+
+        <svg height="10" width="100%">
+          <line x1="0" y1="0" x2="100%" y2="0" style="stroke:rgb(255,255,255);stroke-width:2"/>
+        </svg>
+
+        <router-outlet></router-outlet>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #firstBackground id="firstBackground" [ngStyle]="{backgroundImage: firstBackgroundImageUrl}" [ngClass]="{fadeOut: !firstBackgroundVisible, fadeIn : firstBackgroundVisible}">
+  &nbsp;
+</div>
+
+<div [ngClass]="{fadeIn: !firstBackgroundVisible, fadeOut: firstBackgroundVisible}" [ngStyle]="{backgroundImage: secondBackgroundImageUrl}" #secondBackground id="secondBackground">
+  &nbsp;
+</div>
