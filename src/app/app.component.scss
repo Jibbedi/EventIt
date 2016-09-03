@@ -1,0 +1,16 @@
+@font-face {
+  font-family: openSans;
+  src: url(../styles/OpenSans-Light.ttf);
+}
+
+.header {
+  background: white;
+  border-bottom: 1px solid lightgray;
+  height: 50px;
+  display: flex;
+  align-items: center;
+
+  h2 {
+    margin-left: 20px;
+  }
+}

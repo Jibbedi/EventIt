@@ -1,4 +1,5 @@
 <!doctype html>
+<base href="/">
 <html>
 <head>
   <meta charset="utf-8">
@@ -11,10 +12,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" type="text/css" href="styles/bootstrap-flex.css">
+  <link rel="stylesheet" type="text/css" href="styles/global.css">
 </head>
 <body>
   <app-root>Loading...</app-root>
-  
+
     {{#each scripts.polyfills}}
     <script src="{{.}}"></script>
     {{/each}}
@@ -23,6 +25,6 @@
         System.import('main');
       }).catch(console.error.bind(console));
     </script>
-  
+
 </body>
 </html>
