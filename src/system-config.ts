@@ -13,6 +13,30 @@ const map: any = {
 
 /** User packages configuration. */
 const packages: any = {
+  "@angular/core": {
+    main: "bundles/core.umd.js" //use the ESM entry point for bundling tools
+  },
+  "@angular/common": {
+    main: "bundles/common.umd.js" //use the ESM entry point for bundling tools
+  },
+  "@angular/compiler": {
+    main: "bundles/compiler.umd.js" //use the ESM entry point for bundling tools
+  },
+  "@angular/forms": {
+    main: "bundles/forms.umd.js"
+  },
+  "@angular/http": {
+    main: "bundles/http.umd.js"
+  },
+  "@angular/platform-browser": {
+    main: "bundles/platform-browser.umd.js" //use the ESM entry point for bundling tools
+  },
+  "@angular/platform-browser-dynamic": {
+    main: "bundles/platform-browser-dynamic.umd.js" //use the ESM entry point for bundling tools
+  },
+  "@angular/router": {
+    main: "bundles/router.umd.js" //use the ESM entry point for bundling tools
+  }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,6 +60,9 @@ const barrels: string[] = [
   // App specific barrels.
   'app',
   'app/shared',
+  'app/login',
+  'app/landing-component',
+  'app/signup',
   /** @cli-barrel */
 ];
 
