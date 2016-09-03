@@ -10,8 +10,9 @@ import {SignupComponent} from "./signup/signup.component";
 
 const routes = [
   {path: '', component: LandingComponent,children:[
-    {path: '', component: LoginComponent},
-    {path: 'signup', component: SignupComponent}
+    {path: 'signup', component: SignupComponent},
+    {path: '**', component: LoginComponent},
+    {path:'**',redirecTo:''}
   ]}
 ];
 
