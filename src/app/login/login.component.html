@@ -1,15 +1,20 @@
-<form>
+<form [formGroup]="loginForm" (submit)="login()">
   <label>
     <div class="text-xs-left">Username</div>
-    <input class="form-control" type="text" placeholder="Username">
+    <input formControlName="email" class="form-control" type="text" placeholder="Username">
   </label>
   <label>
     <div class="text-xs-left">Password</div>
-    <input class="form-control" type="password" placeholder="Password">
+    <input formControlName="password" class="form-control" type="password" placeholder="Password">
   </label>
   <span class="login-button-wrapper">
     <button class="btn btn-primary">Login</button>
   </span>
 </form>
 
-<p>No account yet? <a routerLink="/signup">Sign up here.</a></p>
+<div *ngIf="loginError">
+  <p>Login failed.</p>
+  <p>{{loginError.message}}</p>
+</div>
+
+<p>No account yet? <a (click)="routeToSignUp()">Sign up here.</a></p>

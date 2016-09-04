@@ -9,6 +9,8 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  firebase : "vendor/firebase/firebase.js",
+  angularfire2 : "vendor/angularfire2"
 };
 
 /** User packages configuration. */
@@ -36,6 +38,10 @@ const packages: any = {
   },
   "@angular/router": {
     main: "bundles/router.umd.js" //use the ESM entry point for bundling tools
+  },
+  "angularfire2": {
+    main: "angularfire2.js",
+    defaultExtension: 'js'
   }
 };
 

@@ -1,26 +1,31 @@
-<form>
+<form [formGroup]="signUpForm" (submit)="signUp()">
   <h3>Nice to meet you!</h3>
   <div>
     <label>
       <div class="text-xs-left">What username do you like?</div>
-      <input class="form-control" type="text" placeholder="Username">
+      <input formControlName="email" class="form-control" type="text" placeholder="Username">
     </label>
   </div>
 
-  <div>
-    <label>
-      <div class="text-xs-left">What's your email?</div>
-      <input class="form-control" type="text" placeholder="Username">
-    </label>
-  </div>
+  <!--<div>-->
+    <!--<label>-->
+      <!--<div class="text-xs-left">What's your email?</div>-->
+      <!--<input class="form-control" type="text" placeholder="Username">-->
+    <!--</label>-->
+  <!--</div>-->
 
   <div>
     <label>
       <div class="text-xs-left">Use a secure password.</div>
-      <input class="form-control" type="password" placeholder="Password">
+      <input formControlName="password" class="form-control" type="password" placeholder="Password">
     </label>
   </div>
   <button class="btn btn-primary">Signup</button>
 </form>
+
+<div *ngIf="signUpError">
+  <p>Login failed.</p>
+  <p>{{signUpError.message}}</p>
+</div>
 
 <p>Already got an account? <a routerLink="/">Login here.</a></p>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AngularFire} from 'angularfire2'
 
 @Component({
   moduleId: module.id,
@@ -8,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  constructor() {
+  }
 }
