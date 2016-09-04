@@ -23,8 +23,8 @@
   <button class="btn btn-primary">Signup</button>
 </form>
 
-<div *ngIf="signUpError">
-  <p>Login failed.</p>
+<div class="error-block" *ngIf="signUpError">
+  <p>Signup failed.</p>
   <p>{{signUpError.message}}</p>
 </div>
 

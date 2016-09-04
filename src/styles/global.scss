@@ -6,4 +6,16 @@
 a {
   color: white;
   text-decoration: underline;
+  cursor: pointer;
+}
+
+.error-block {
+  display: inline-block;
+  border: 1px solid;
+  padding: 5px;
+  margin: 10px;
+
+  p {
+    margin: 0;
+  }
 }
