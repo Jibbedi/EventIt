@@ -8,18 +8,34 @@
   </div>
 
   <!--<div>-->
-    <!--<label>-->
-      <!--<div class="text-xs-left">What's your email?</div>-->
-      <!--<input class="form-control" type="text" placeholder="Username">-->
-    <!--</label>-->
+  <!--<label>-->
+  <!--<div class="text-xs-left">What's your email?</div>-->
+  <!--<input class="form-control" type="text" placeholder="Username">-->
+  <!--</label>-->
   <!--</div>-->
 
-  <div>
+  <div *ngIf="!signUpForm.controls.showPassword.value">
     <label>
       <div class="text-xs-left">Use a secure password.</div>
       <input formControlName="password" class="form-control" type="password" placeholder="Password">
     </label>
   </div>
+
+  <div *ngIf="signUpForm.controls.showPassword.value">
+    <label>
+      <div class="text-xs-left">Use a secure password.</div>
+      <input formControlName="visiblePassword" class="form-control" type="text" placeholder="Password">
+    </label>
+  </div>
+
+
+  <div>
+    <label>
+      <span>Show Password</span>
+      <input type="checkbox" formControlName="showPassword">
+    </label>
+  </div>
+
   <button class="btn btn-primary">Signup</button>
 </form>
 
