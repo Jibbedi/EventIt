@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) return;
 
     this._userService.login(this.getValueOfControlWithName('email'), this.getValueOfControlWithName('password'))
-      .then(success => console.log('login successful'),failure => this.loginError = failure);
+      .then(success => this._router.navigateByUrl('app'),failure => this.loginError = failure);
   }
 
   routeToSignUp() {
