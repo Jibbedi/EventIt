@@ -1,54 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 
 @Component({
-  moduleId: module.id,
-  selector: 'landing-component',
-  templateUrl: 'landing.component.html',
-  styleUrls: ['landing.component.css']
+    moduleId: module.id,
+    selector: 'landing-component',
+    templateUrl: 'landing.component.html',
+    styleUrls: ['landing.component.css']
 })
-export class LandingComponent {
+export class LandingComponent implements OnDestroy {
 
-  prefix = "url('./images/";
-  suffix = "')";
+    prefix = "url('./images/";
+    suffix = "')";
 
-  firstBackgroundVisible = true;
+    firstBackgroundVisible = true;
 
-  firstBackgroundImageUrl;
-  secondBackgroundImageUrl;
+    firstBackgroundImageUrl;
+    secondBackgroundImageUrl;
 
-  backgroundImageNames = ['bg0.jpg','bg1.jpg','bg2.jpg','bg3.jpg'];
-  backgroundIndex = 1;
+    backgroundImageNames = ['bg0.jpg', 'bg1.jpg', 'bg2.jpg', 'bg3.jpg'];
+    backgroundIndex = 1;
 
-  constructor() {
+    private _backgroundSwitchInterval;
 
-    this.firstBackgroundImageUrl = this.buildBackgroundUrl(0);
-    this.secondBackgroundImageUrl = this.buildBackgroundUrl(1);
+    constructor() {
 
-    window.setInterval(() => {
-      this.firstBackgroundVisible = !this.firstBackgroundVisible;
-      this.switchBackgroundImage();
+        this.firstBackgroundImageUrl = this.buildBackgroundUrl(0);
+        this.secondBackgroundImageUrl = this.buildBackgroundUrl(1);
 
-    },20000);
-  }
+        this._backgroundSwitchInterval = window.setInterval(() => {
+            this.firstBackgroundVisible = !this.firstBackgroundVisible;
+            this.switchBackgroundImage();
 
-  private switchBackgroundImage() {
-    window.setTimeout(() => {
-      this.backgroundIndex = (this.backgroundIndex + 1) % this.backgroundImageNames.length;
+        }, 20000);
+    }
 
-      if (this.firstBackgroundVisible) {
-        this.secondBackgroundImageUrl = this.buildBackgroundUrl(this.backgroundIndex);
-      }
-      else {
-        this.firstBackgroundImageUrl = this.buildBackgroundUrl(this.backgroundIndex);
-      }
+    ngOnDestroy() {
+        window.clearInterval(this._backgroundSwitchInterval);
+    }
 
-      console.log(this.secondBackgroundImageUrl,this.firstBackgroundImageUrl);
+    private switchBackgroundImage() {
+        window.setTimeout(() => {
+            this.backgroundIndex = (this.backgroundIndex + 1) % this.backgroundImageNames.length;
 
-    }, 4000);
-  }
+            if (this.firstBackgroundVisible) {
+                this.secondBackgroundImageUrl = this.buildBackgroundUrl(this.backgroundIndex);
+            }
+            else {
+                this.firstBackgroundImageUrl = this.buildBackgroundUrl(this.backgroundIndex);
+            }
 
-  private buildBackgroundUrl(index: number) {
-    return this.prefix + this.backgroundImageNames[index] + this.suffix;
-  }
+            console.log(this.secondBackgroundImageUrl, this.firstBackgroundImageUrl);
 
+        }, 4000);
+    }
+
+    private buildBackgroundUrl(index: number) {
+        return this.prefix + this.backgroundImageNames[index] + this.suffix;
+    }
 }
