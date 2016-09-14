@@ -1,0 +1,22 @@
+<div class="col-xs-12">
+    <div class="menu">
+        <div>
+            <a (click)="moveTo('create')">Create</a>
+        </div>
+        <div>
+            <a (click)="moveTo('share')">Share</a>
+        </div>
+        <div>
+            <a (click)="moveTo('discover')">Discover</a>
+        </div>
+    </div>
+    <div class="selection-indicator-wrapper" [ngClass]="highlightedSelection">
+        <div class="selection-indicator">
+            &nbsp;
+        </div>
+    </div>
+</div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>

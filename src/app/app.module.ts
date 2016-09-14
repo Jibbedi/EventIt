@@ -8,14 +8,24 @@ import {LandingComponent} from "./landing/landing.component";
 import {SignupComponent} from "./signup/signup.component";
 import {AngularFireModule} from "angularfire2";
 import {UserService} from "./shared/user-service/user.service";
+import {EntryComponent} from "./entry/entry.component";
+import {ShareComponent} from "./share/share.component";
+import {DiscoverComponent} from "./discover/discover.component";
+import {CreateComponent} from "./create/create.component";
 
 
 const routes = [
+  {path : 'app', component : EntryComponent, children: [
+    {path : '', redirectTo : 'discover'},
+    {path : 'create', component: CreateComponent},
+    {path : 'share', component: ShareComponent},
+    {path : 'discover', component: DiscoverComponent}
+  ]},
   {path: '', component: LandingComponent,children:[
     {path: 'signup', component: SignupComponent},
     {path: '**', component: LoginComponent},
-    {path:'**',redirectTo:''}
-  ]}
+  ]},{path:'**',redirectTo:''}
+
 ];
 
 export const firebaseConfig = {
@@ -27,7 +37,7 @@ export const firebaseConfig = {
 
 @NgModule({
   imports: [BrowserModule, FormsModule,ReactiveFormsModule, RouterModule,RouterModule.forRoot(routes), AngularFireModule.initializeApp(firebaseConfig)],
-  declarations: [AppComponent, LoginComponent, LandingComponent, SignupComponent],
+  declarations: [AppComponent, LoginComponent, LandingComponent, SignupComponent,EntryComponent, CreateComponent, ShareComponent, DiscoverComponent],
   bootstrap: [AppComponent],
   providers: [UserService]
   })
