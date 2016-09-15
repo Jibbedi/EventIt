@@ -1,0 +1,40 @@
+:host {
+    display: block;
+    border: 1px solid lightgray;
+
+    .content {
+        padding: 5px;
+
+        h5 {
+            margin: 5px 0px;
+        }
+
+        .intro-message {
+            font-size: 0.8em;
+            margin: 0;
+        }
+
+        .participate-toggle {
+        }
+
+        div {
+            font-size: 0.8em;
+        }
+
+    }
+
+    .headline-image {
+        height: calc(350px * (9/16));
+        background: url(https://aspblogs.blob.core.windows.net/media/lduveau/Windows-Live-Writer/Angular-Connect_A08D/image_1ac661d4-8d25-45d2-aac2-a78b7b67f48b.png);
+        background-size: cover;
+        background-position: top center;
+        border-bottom: 1px solid lightgray;
+
+    }
+
+    .show-description-toggle {
+        font-size: 0.8em;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}

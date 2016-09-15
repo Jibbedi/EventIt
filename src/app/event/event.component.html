@@ -1,0 +1,47 @@
+<div class="headline-image">&nbsp;</div>
+<div class="content">
+    <h5 class="text-xs-center">Angular Connect 2016</h5>
+
+    <p class="intro-message text-xs-center">{{getOptionalMessage()}}</p>
+    <p class="show-description-toggle text-xs-center" (click)="toggleShowCompleteDescription()" *ngIf="shouldDisplayToggleButton()">Show complete description</p>
+
+    <svg height="10" width="100%">
+        <line x1="0" y1="0" x2="100%" y2="0" style="stroke:rgb(0,0,0);stroke-width:2"/>
+    </svg>
+
+    <div>
+        <i class="fa fa-map-marker"></i>
+        <span>London, UK</span>
+    </div>
+
+    <div>
+        <i class="fa fa-calendar"></i>
+        <span>September 20 2016 08:00 - September 20 2016 12:00</span>
+    </div>
+
+    <div>
+        <i class="fa fa-user"></i>
+        <span>Organizers</span>
+    </div>
+
+    <div>
+        <i class="fa fa-tags"></i>
+        <span>Angular, JavaScript</span>
+    </div>
+
+    <div class="text-xs-right">
+        <button class="btn btn-danger participate-toggle">
+            <i class="fa fa-check"></i> Participate
+        </button>
+    </div>
+</div>
+
+
+<!--Name of the event-->
+<!--Type of the event (birthday party, conference talk, wedding, etc.)-->
+<!--Event host (could be an individual’s name or an organization)-->
+<!--Event start date and time-->
+<!--Event end date and time-->
+<!--Guest list-->
+<!--Location-->
+<!--Optional message to the guests with additional information about the event-->

@@ -27,3 +27,22 @@ $minWidth: 800px;
   }
 
 }
+
+.events {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  //&:after {
+  //  content: "";
+  //  flex: 1;
+  //}
+}
+
+.event-wrapper {
+  $eventWidth: 350px;
+  flex: 0 0 $eventWidth;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
