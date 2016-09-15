@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
+import {Event} from "../model/event";
+import {AngularFire} from 'angularfire2'
+import {UserService} from "../shared/user-service/user.service";
 
 @Component({
     moduleId: module.id,
@@ -6,31 +9,43 @@ import {Component, OnInit} from '@angular/core';
     templateUrl: 'event.component.html',
     styleUrls: ['event.component.css']
 })
-export class EventComponent implements OnInit {
+export class EventComponent {
 
     MAX_NUMBER_OF_VISIBLE_CHARACTERS = 50;
 
-    showCompleteMessage = false;
+    showCompleteDescription = false;
 
-    message = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+    @Input()
+    event: Event;
 
-    constructor() {
-    }
-
-    ngOnInit() {
+    constructor(private _af : AngularFire, private _userService : UserService) {
     }
 
     getOptionalMessage(): string {
-        if (this.showCompleteMessage) return this.message;
-        return this.message.substr(0, this.MAX_NUMBER_OF_VISIBLE_CHARACTERS) + '...';
+
+        if (!this.event.description) return '';
+
+        if (this.showCompleteDescription) return this.event.description;
+        return this.event.description.substr(0, this.MAX_NUMBER_OF_VISIBLE_CHARACTERS) + '...';
     }
 
     shouldDisplayToggleButton() {
-        return this.message.length > this.MAX_NUMBER_OF_VISIBLE_CHARACTERS;
+        return this.event.description && this.event.description.length > this.MAX_NUMBER_OF_VISIBLE_CHARACTERS;
     }
 
     toggleShowCompleteDescription() {
-        this.showCompleteMessage = !this.showCompleteMessage;
+        this.showCompleteDescription = !this.showCompleteDescription;
     }
 
+    getBackgroundImageUrl() : string {
+        return `url(${this.event.imageDataUrl})`;
+    }
+
+    toggleParticipation() {
+      console.log('test');
+    }
+
+    getTagList() {
+        if (this.event.tags) return Object.keys(this.event.tags).join(',');
+    }
 }

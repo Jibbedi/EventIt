@@ -8,7 +8,7 @@ export class UserService {
   }
 
 
-  private authToken : string;
+  public authToken : string;
 
   public prefilledData : {email : string, password : string};
 

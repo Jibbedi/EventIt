@@ -9,9 +9,15 @@ export class AddressParsingService {
         if (!response.results || response.results.length == 0) return null;
 
         let firstResult = response.results[0];
+
+        return this.getAddressFromPlace(firstResult);
+
+    }
+
+    public getAddressFromPlace(place) {
         let userAddress = new Address();
 
-        for (let adressComponent of firstResult.address_components) {
+        for (let adressComponent of place.address_components) {
 
             let longName = adressComponent.long_name;
 

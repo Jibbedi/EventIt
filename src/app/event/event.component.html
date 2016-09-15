@@ -1,9 +1,13 @@
-<div class="headline-image">&nbsp;</div>
+<div class="headline-image" [ngStyle]="{backgroundImage: getBackgroundImageUrl()}">&nbsp;</div>
 <div class="content">
-    <h5 class="text-xs-center">Angular Connect 2016</h5>
+    <h5 class="text-xs-center">{{event.name}}</h5>
 
     <p class="intro-message text-xs-center">{{getOptionalMessage()}}</p>
-    <p class="show-description-toggle text-xs-center" (click)="toggleShowCompleteDescription()" *ngIf="shouldDisplayToggleButton()">Show complete description</p>
+    <p class="show-description-toggle text-xs-center" (click)="toggleShowCompleteDescription()" *ngIf="shouldDisplayToggleButton()">
+        <span *ngIf="!showCompleteDescription">Show</span>
+        <span *ngIf="showCompleteDescription">Hide</span>
+        complete description
+    </p>
 
     <svg height="10" width="100%">
         <line x1="0" y1="0" x2="100%" y2="0" style="stroke:rgb(0,0,0);stroke-width:2"/>
@@ -11,26 +15,26 @@
 
     <div>
         <i class="fa fa-map-marker"></i>
-        <span>London, UK</span>
+        <span>{{event.location.cityName}},{{event.location.country}}</span>
     </div>
 
     <div>
         <i class="fa fa-calendar"></i>
-        <span>September 20 2016 08:00 - September 20 2016 12:00</span>
+        <span>{{event.startDate}} - {{event.endDate}}</span>
     </div>
 
     <div>
         <i class="fa fa-user"></i>
-        <span>Organizers</span>
+        <span>{{event.host}}</span>
     </div>
 
     <div>
         <i class="fa fa-tags"></i>
-        <span>Angular, JavaScript</span>
+        <span>{{getTagList()}}</span>
     </div>
 
     <div class="text-xs-right">
-        <button class="btn btn-danger participate-toggle">
+        <button class="btn btn-danger participate-toggle" (click)="toggleParticipation()">
             <i class="fa fa-check"></i> Participate
         </button>
     </div>

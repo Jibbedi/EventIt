@@ -7,38 +7,24 @@
         </label>
         <label class="location-input">
             <span>in</span>
-            <input class="form-control" type="text" formControlName="location" placeholder="in New York, NYC, ...">
+            <input #locationInput class="form-control" type="text" formControlName="location" placeholder="in New York, NYC, ...">
         </label>
-        <button class="btn btn-success search-events-submit">Search</button>
+        <button (click)="searchEvents()" class="btn btn-success search-events-submit">Search</button>
     </form>
 
 </div>
 
 
+<p *ngIf="!searchButtonTouched && !eventsLoading" class="text-xs-center">You are currently viewing all public events. Hit the search button to limit them.</p>
+
 <div class="col-xs-12 events">
 
-    <div class="event-wrapper">
-        <event></event>
+    <div class="event-wrapper" *ngFor="let event of events | async">
+        <event [event]="event"></event>
     </div>
 
-    <div class="event-wrapper">
-        <event></event>
-    </div>
-
-    <div class="event-wrapper">
-        <event></event>
-    </div>
-
-    <div class="event-wrapper">
-        <event></event>
-    </div>
-
-    <div class="event-wrapper">
-        <event></event>
-    </div>
-
-    <div class="event-wrapper">
-        <event></event>
+    <div *ngIf="eventsLoading">
+        Events are loading...
     </div>
 
 </div>
