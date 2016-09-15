@@ -1,3 +1,15 @@
-<p>
-  discover works!
-</p>
+<div class="col-xs-12">
+
+    <form [formGroup]="discoverForm" class="search-events-form">
+        <label class="tags-input">
+            <span>I'm looking for</span>
+            <input class="form-control" type="text" formControlName="tags" placeholder="Search for tags like sports, evening, ...">
+        </label>
+        <label class="location-input">
+            <span>in</span>
+            <input class="form-control" type="text" formControlName="location" placeholder="in New York, NYC, ...">
+        </label>
+        <button class="btn btn-success search-events-submit">Search</button>
+    </form>
+
+</div>

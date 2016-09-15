@@ -1,0 +1,29 @@
+$minWidth: 800px;
+
+.search-events-form {
+
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+
+  label {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .tags-input {
+    flex: 4 400px;
+  }
+
+  .location-input {
+    flex: 2 200px;
+  }
+
+  .search-events-submit {
+    flex: 100px;
+    align-self: center;
+    margin-top: 13px;
+
+  }
+
+}

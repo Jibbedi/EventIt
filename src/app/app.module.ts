@@ -12,6 +12,9 @@ import {EntryComponent} from "./entry/entry.component";
 import {ShareComponent} from "./share/share.component";
 import {DiscoverComponent} from "./discover/discover.component";
 import {CreateComponent} from "./create/create.component";
+import {HttpModule} from "@angular/http";
+import {LocationService} from "./shared/location-service/location.service";
+import {AddressParsingService} from "./shared/address-parsing-service/address-parsing.service";
 
 
 const routes = [
@@ -36,10 +39,10 @@ export const firebaseConfig = {
 };
 
 @NgModule({
-  imports: [BrowserModule, FormsModule,ReactiveFormsModule, RouterModule,RouterModule.forRoot(routes), AngularFireModule.initializeApp(firebaseConfig)],
+  imports: [BrowserModule, HttpModule, FormsModule,ReactiveFormsModule, RouterModule,RouterModule.forRoot(routes), AngularFireModule.initializeApp(firebaseConfig)],
   declarations: [AppComponent, LoginComponent, LandingComponent, SignupComponent,EntryComponent, CreateComponent, ShareComponent, DiscoverComponent],
   bootstrap: [AppComponent],
-  providers: [UserService]
+  providers: [UserService, LocationService, AddressParsingService]
   })
 export class AppModule {
 }
