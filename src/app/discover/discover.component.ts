@@ -6,6 +6,7 @@ import "rxjs/add/observable/forkJoin"
 import "rxjs/add/operator/filter"
 import {AddressParsingService} from "../shared/address-parsing-service/address-parsing.service";
 import {Address} from "../model/address";
+import {Event} from "../model/event";
 import {Observable} from "rxjs";
 import {EventService} from "../shared/event-service/event.service";
 
@@ -55,10 +56,17 @@ export class DiscoverComponent {
     console.log('view ready');
 
 
-    let autocomplete = new google.maps.places.Autocomplete(this.locationInput.nativeElement, {});
-    autocomplete.addListener('place_changed', () => {
-      this.searchLocation = this._addressParsingService.getAddressFromPlace(autocomplete.getPlace());
-    })
+    try {
+      let autocomplete = new google.maps.places.Autocomplete(this.locationInput.nativeElement, {});
+      autocomplete.addListener('place_changed', () => {
+        this.searchLocation = this._addressParsingService.getAddressFromPlace(autocomplete.getPlace());
+      })
+    }
+    catch (e) {
+      console.log('setting up google autocomplete failed');
+    }
+
+
   }
 
 
