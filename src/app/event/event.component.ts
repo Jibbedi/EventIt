@@ -1,51 +1,59 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {Event} from "../model/event";
-import {AngularFire} from 'angularfire2'
-import {UserService} from "../shared/user-service/user.service";
+import {EventParticipationService} from "../shared/event-participation-service/event-participation.service";
 
 @Component({
-    moduleId: module.id,
-    selector: 'event',
-    templateUrl: 'event.component.html',
-    styleUrls: ['event.component.css']
+  moduleId: module.id,
+  selector: 'event',
+  templateUrl: 'event.component.html',
+  styleUrls: ['event.component.css']
 })
 export class EventComponent {
 
-    MAX_NUMBER_OF_VISIBLE_CHARACTERS = 50;
+  MAX_NUMBER_OF_VISIBLE_CHARACTERS = 50;
 
-    showCompleteDescription = false;
+  showCompleteDescription = false;
 
-    @Input()
-    event: Event;
+  @Input()
+  event: Event;
 
-    constructor(private _af : AngularFire, private _userService : UserService) {
-    }
+  constructor(private _participationService: EventParticipationService) {
+  }
 
-    getOptionalMessage(): string {
+  getOptionalMessage(): string {
+    if (!this.event.description) return '';
 
-        if (!this.event.description) return '';
+    if (this.showCompleteDescription) return this.event.description;
+    return this.event.description.substr(0, this.MAX_NUMBER_OF_VISIBLE_CHARACTERS) + '...';
+  }
 
-        if (this.showCompleteDescription) return this.event.description;
-        return this.event.description.substr(0, this.MAX_NUMBER_OF_VISIBLE_CHARACTERS) + '...';
-    }
+  shouldDisplayToggleButton() {
+    return this.event.description && this.event.description.length > this.MAX_NUMBER_OF_VISIBLE_CHARACTERS;
+  }
 
-    shouldDisplayToggleButton() {
-        return this.event.description && this.event.description.length > this.MAX_NUMBER_OF_VISIBLE_CHARACTERS;
-    }
+  toggleShowCompleteDescription() {
+    this.showCompleteDescription = !this.showCompleteDescription;
+  }
 
-    toggleShowCompleteDescription() {
-        this.showCompleteDescription = !this.showCompleteDescription;
-    }
+  getBackgroundImageUrl(): string {
+    if (!this.event.imageDataUrl) return '';
+    return `url(${this.event.imageDataUrl})`;
+  }
 
-    getBackgroundImageUrl() : string {
-        return `url(${this.event.imageDataUrl})`;
-    }
+  toggleParticipation() {
+    this._participationService.toggleParticipation(this.event);
+  }
 
-    toggleParticipation() {
-      console.log('test');
-    }
+  isUserParticipating() {
+    return this._participationService.isUserParticipatingInEvent(this.event);
+  }
 
-    getTagList() {
-        if (this.event.tags) return Object.keys(this.event.tags).join(',');
-    }
+  getTagList() {
+    if (this.event.tags) return Object.keys(this.event.tags).join(',');
+  }
+
+  getNumberOfParticipants() {
+    let numberOfParticipants = this._participationService.numberOfParticipants(this.event);
+    return `${numberOfParticipants} ${(numberOfParticipants == 1) ? 'Participant' : 'Participants'}`;
+  }
 }

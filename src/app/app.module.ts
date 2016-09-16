@@ -17,6 +17,7 @@ import {LocationService} from "./shared/location-service/location.service";
 import {AddressParsingService} from "./shared/address-parsing-service/address-parsing.service";
 import {EventComponent} from "./event/event.component";
 import {EventService} from "./shared/event-service/event.service";
+import {EventParticipationService} from "./shared/event-participation-service/event-participation.service";
 
 
 const routes = [
@@ -44,7 +45,7 @@ export const firebaseConfig = {
   imports: [BrowserModule, HttpModule, FormsModule,ReactiveFormsModule, RouterModule,RouterModule.forRoot(routes), AngularFireModule.initializeApp(firebaseConfig)],
   declarations: [AppComponent, LoginComponent, LandingComponent, SignupComponent,EntryComponent, CreateComponent, ShareComponent, DiscoverComponent, EventComponent],
   bootstrap: [AppComponent],
-  providers: [UserService, LocationService, AddressParsingService, EventService]
+  providers: [UserService, LocationService, AddressParsingService, EventService, EventParticipationService]
   })
 export class AppModule {
 }

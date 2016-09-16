@@ -33,9 +33,15 @@
         <span>{{getTagList()}}</span>
     </div>
 
+  <div>
+    <i class="fa fa-users"></i>
+    <span>{{getNumberOfParticipants()}}</span>
+  </div>
+
     <div class="text-xs-right">
         <button class="btn btn-danger participate-toggle" (click)="toggleParticipation()">
-            <i class="fa fa-check"></i> Participate
+            <span *ngIf="!isUserParticipating()"><i class="fa fa-check"></i> Participate</span>
+            <span *ngIf="isUserParticipating()"><i class="fa fa-times"></i> Don't participate</span>
         </button>
     </div>
 </div>

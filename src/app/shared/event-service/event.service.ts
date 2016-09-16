@@ -2,27 +2,36 @@ import {Injectable} from '@angular/core';
 import {AngularFire, FirebaseListObservable}from 'angularfire2'
 import {Observable} from "rxjs/Observable";
 import {Address} from "../../model/address";
+import {Event} from "../../model/event";
 
 @Injectable()
 export class EventService {
 
-  private events: FirebaseListObservable<Event>;
+  private events: FirebaseListObservable<Event[]>;
   private EVENTS_LOCATION = '/events';
   private EVENT_IMAGES_LOCATION = '/eventImages';
 
   constructor(private _af: AngularFire) {
   }
 
+  saveEvent(event: Event) {
+    let key = event['$key'];
+    if (key) {
+      delete event['$key'];
+      this.getListOfEvents().update(key, event);
+      return;
+    }
+  }
 
   getAllPublicEvents(): Observable<Event[]> {
     return Observable.create(observer => {
-      this._af.database.list(this.EVENTS_LOCATION).map(events => this.loadImagesForEvents(events)).subscribe(events => observer.next(events));
+      this.getListOfEvents().map(events => this.loadImagesForEvents(events)).subscribe(events => observer.next(events));
     })
   }
 
   getPublicEventsFilteredByLocationAndTags(location: Address, tags: string[]): Observable<Event[]> {
     return Observable.create(observer => {
-      this._af.database.list(this.EVENTS_LOCATION)
+      this.getListOfEvents()
         .map(events => this.filterEventsForUserInput(events, location, tags))
         .map(events => this.loadImagesForEvents(events))
         .subscribe(events => observer.next(events));
@@ -61,6 +70,10 @@ export class EventService {
     });
 
     return numberOfMatches;
+  }
+
+  private getListOfEvents(): FirebaseListObservable<Event[]> {
+    return this._af.database.list(this.EVENTS_LOCATION);
   }
 
 
