@@ -42,14 +42,13 @@ export class LocationService {
             .map(r => r.json())
             .map(r => this._addressParsingService.getFirstAddressFromResponse(r))
             .subscribe(address => {
-                address ? observer.next(address) : observer.error(null);
+                if (address) observer.next(address);
                 observer.complete();
             });
     }
 
     private handleErrorGetCurrentPosition(error, observer) {
         console.log(error);
-        observer.error(null);
         observer.complete();
     }
 
