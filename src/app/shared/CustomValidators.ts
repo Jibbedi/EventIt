@@ -1,4 +1,4 @@
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 export class CustomValidators {
 
   static isValidDate = (control: FormControl) => {
@@ -14,4 +14,16 @@ export class CustomValidators {
     }
     return {noValidTime: true};
   };
+
+  static eventPublicOrUsersInvited = (group: FormGroup) => {
+    const inviteUsersControl = group.get('inviteUsers');
+    if (group.get('publicEvent').value === true || inviteUsersControl.value.length > 0) {
+      inviteUsersControl.setErrors(null);
+      return null;
+    }
+
+    const error = {eventPrivateAndNoInvitations : true};
+    inviteUsersControl.setErrors(error);
+    return error;
+  }
 }

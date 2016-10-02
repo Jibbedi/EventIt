@@ -47,7 +47,10 @@ export class CreateComponent implements AfterViewInit {
       dates: this._fb.array([
         this.createDateFormGroup()
       ]),
-      publicEvent: [true],
+      invitationGroup : this._fb.group({
+        publicEvent: [true],
+        inviteUsers: ['']
+      },{validator: CustomValidators.eventPublicOrUsersInvited}),
       eventType: ['', Validators.required],
       tags: ['', Validators.required],
       eventHost: ['', Validators.required],

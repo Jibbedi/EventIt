@@ -52,18 +52,23 @@
               </p>
             </div>
 
-            <div>
-              <label>
-                <input formControlName="publicEvent" type="checkbox">
-                <span>Make event public?</span>
-              </label>
-            </div>
+            <div formGroupName="invitationGroup">
+              <div>
+                <label>
+                  <input formControlName="publicEvent" type="checkbox">
+                  <span>Make event public?</span>
+                </label>
+              </div>
 
-            <div *ngIf="!createEventForm.controls.publicEvent.value">
-              <label>
-                <span>Invite Users*</span>
-                <input class="form-control" placeholder="e.g. foo@bar.com, example@example.com">
-              </label>
+              <div *ngIf="!createEventForm.controls.invitationGroup.get('publicEvent').value">
+                <label>
+                  <span>Invite Users*</span>
+                  <input formControlName="inviteUsers" class="form-control"
+                         placeholder="e.g. foo@bar.com, example@example.com">
+                  <error-messages [control]="createEventForm.controls.invitationGroup.get('inviteUsers')"></error-messages>
+                </label>
+              </div>
+
             </div>
 
           </div>
@@ -111,7 +116,7 @@
             <div class="upload-preview" [style.backgroundImage]="uploadedImage" *ngIf="uploadedImage"></div>
             <div class="upload-wrapper" *ngIf="!uploadedImage">
               <div>
-                  <label>
+                <label>
                   Select an image from your device.
                   <input type="file" (change)="handleInputChange($event)">
                 </label>
@@ -128,7 +133,8 @@
             <button [disabled]="formCreationStep == 0" (click)="moveStep(-1)" class="btn btn-success left">Previous
             </button>
             <button *ngIf="formCreationStep < 2" (click)="moveStep(1)" class="btn btn-success right">Next</button>
-            <button [disabled]="!createEventForm.valid" *ngIf="formCreationStep == 2" (click)="createEvent($event)" class="btn btn-success right">Create
+            <button [disabled]="!createEventForm.valid" *ngIf="formCreationStep == 2" (click)="createEvent($event)"
+                    class="btn btn-success right">Create
             </button>
           </div>
 

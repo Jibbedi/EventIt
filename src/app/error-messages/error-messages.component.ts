@@ -26,6 +26,8 @@ export class ErrorMessagesComponent {
         return 'Please give a valid date, e.g. 2016-12-24';
       case 'noValidTime':
         return 'Please give a valid time, e.g. 23:10';
+      case 'eventPrivateAndNoInvitations':
+        return 'If your event is private, you must at least invite one user';
       default:
         return 'Unknown error';
     }
