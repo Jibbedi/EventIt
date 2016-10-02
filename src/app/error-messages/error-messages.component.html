@@ -1,0 +1,5 @@
+<div *ngIf="!control.valid && control.touched">
+  <p *ngFor="let errorKey of getErrorKeys()">
+    <i class="fa fa-times"></i> {{getMessage(errorKey)}}
+  </p>
+</div>

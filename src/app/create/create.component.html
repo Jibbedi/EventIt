@@ -1,3 +1,153 @@
-<p>
-  create works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="step-wrapper">
+        <span (click)="moveToStep(0)" [ngClass]="{active: formCreationStep == 0}">Basic informations</span>
+        <span (click)="moveToStep(1)" [ngClass]="{active: formCreationStep == 1}">Describe your event</span>
+        <span (click)="moveToStep(2)" [ngClass]="{active: formCreationStep == 2}">Upload an image</span>
+      </div>
+      <div class="form-wrapper">
+        <form [formGroup]="createEventForm">
+          <div [hidden]="formCreationStep != 0">
+            <div>
+              <label>
+                <span>What's the name?*</span>
+                <input formControlName="eventName" placeholder="Give your event a name" class="form-control">
+                <error-messages [control]="createEventForm.get('eventName')"></error-messages>
+              </label>
+            </div>
+
+            <div>
+              <label>
+                <span>Where does it happen?*</span>
+                <input formControlName="location" placeholder="in New York, NYC, ..." id="autocomplete"
+                       class="form-control">
+                <error-messages [control]="createEventForm.get('location')"></error-messages>
+              </label>
+            </div>
+
+            <div formArrayName="dates">
+              <div class="datetime-wrapper" [formGroupName]="index"
+                   *ngFor="let control of createEventForm.controls.dates.controls; let index = index">
+                <label class="date">
+                  <span *ngIf="index == 0">Event is on*</span>
+                  <span *ngIf="index == 1">Event ends on*</span>
+                  <input formControlName="date" type="date" placeholder="e.g. 20.08.2016" class="form-control">
+                  <error-messages [control]="createEventForm.controls.dates.at(index).get('date')"></error-messages>
+                </label>
+                <label class="time">
+                  <span>at*</span>
+                  <input formControlName="time" type="time" placeholder="e.g. 20:00" class="form-control">
+                  <error-messages [control]="createEventForm.controls.dates.at(index).get('time')"></error-messages>
+                </label>
+              </div>
+            </div>
+
+
+            <div>
+              <p (click)="toggleEndDateVisible()" class="end-date-toggle">
+                <span *ngIf="createEventForm.controls.dates.controls.length == 2">Remove end date</span>
+                <span *ngIf="createEventForm.controls.dates.controls.length == 1">Add end date</span>
+              </p>
+            </div>
+
+            <div>
+              <label>
+                <input formControlName="publicEvent" type="checkbox">
+                <span>Make event public?</span>
+              </label>
+            </div>
+
+            <div *ngIf="!createEventForm.controls.publicEvent.value">
+              <label>
+                <span>Invite Users*</span>
+                <input class="form-control" placeholder="e.g. foo@bar.com, example@example.com">
+              </label>
+            </div>
+
+          </div>
+
+          <div [hidden]="formCreationStep != 1">
+            <div>
+              <label>
+                <span>What kind of event?*</span>
+                <input formControlName="eventType" list="category" class="form-control">
+                <datalist id="category">
+                  <option *ngFor="let tag of tags | async">
+                    {{tag.$key}}
+                  </option>
+                </datalist>
+                <error-messages [control]="createEventForm.get('eventType')"></error-messages>
+              </label>
+            </div>
+
+            <div>
+              <label>
+                <span>Put tags on it*</span>
+                <input formControlName="tags" class="form-control" placeholder="e.g. javascript, angular">
+                <error-messages [control]="createEventForm.get('tags')"></error-messages>
+              </label>
+            </div>
+
+
+            <div>
+              <label>
+                <span>Who is hosting?*</span>
+                <input formControlName="eventHost" class="form-control">
+                <error-messages [control]="createEventForm.get('eventHost')"></error-messages>
+              </label>
+            </div>
+
+            <div>
+              <label>
+                <span>Additional infos...</span>
+                <textarea class="form-control"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <div [hidden]="formCreationStep != 2">
+            <div class="upload-preview" [style.backgroundImage]="uploadedImage" *ngIf="uploadedImage"></div>
+            <div class="upload-wrapper" *ngIf="!uploadedImage">
+              <div>
+                  <label>
+                  Select an image from your device.
+                  <input type="file" (change)="handleInputChange($event)">
+                </label>
+                <div class="upload-area" dropzone="copy" [class.dragover]="dragover" (dragover)="handleDragover($event)"
+                     (drop)="handleDrop($event)">
+                  or drag here
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="info">Fields marked with * are required.</div>
+          <div class="step-buttons">
+            <button [disabled]="formCreationStep == 0" (click)="moveStep(-1)" class="btn btn-success left">Previous
+            </button>
+            <button *ngIf="formCreationStep < 2" (click)="moveStep(1)" class="btn btn-success right">Next</button>
+            <button [disabled]="!createEventForm.valid" *ngIf="formCreationStep == 2" (click)="createEvent($event)" class="btn btn-success right">Create
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6 hidden-sm-down map-wrapper">
+      <div id="map" class="map-view" style="height: 500px; width: 100%"></div>
+    </div>
+
+  </div>
+</div>
+
+
+<!--Name of the event-->
+<!--Type of the event (birthday party, conference talk, wedding, etc.)-->
+<!--Event host (could be an individual’s name or an organization)-->
+<!--Event start date and time-->
+<!--Event end date and time-->
+<!--Guest list-->
+<!--Location-->
+<!--Optional message to the guests with additional information about the event-->

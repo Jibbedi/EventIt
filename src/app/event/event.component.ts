@@ -49,7 +49,7 @@ export class EventComponent {
   }
 
   getTagList() {
-    if (this.event.tags) return Object.keys(this.event.tags).join(',');
+    if (this.event.tags instanceof Array) return this.event.tags.join(',');
   }
 
   getNumberOfParticipants() {

@@ -39,6 +39,16 @@ export class AddressParsingService {
             }
         }
 
+        let coords = place.geometry.location;
+
+        if (typeof coords.lat == 'function') {
+          coords.lat = coords.lat();
+          coords.lng = coords.lng();
+        }
+
+        userAddress.latitude = coords.lat;
+        userAddress.longitude = coords.lng;
+
         return userAddress;
     }
 

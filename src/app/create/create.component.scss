@@ -1,0 +1,109 @@
+:host {
+  margin-top: 10px;
+  display: block;
+}
+
+.step-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  min-height: 30px;
+  cursor: pointer;
+
+
+  span {
+    transition: 1s all;
+  }
+
+  span:not(.active){
+    color: lightgray;
+  }
+
+  span.active {
+    font-size: 1.1em;
+  }
+}
+
+.map-wrapper {
+  padding: 10px;
+
+  .map-view {
+    border: 1px solid black;
+  }
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+
+  form {
+    min-width: 350px;
+    width: 80%;
+  }
+}
+
+label {
+  width: 100%;
+}
+
+.datetime-wrapper {
+  display: flex;
+
+  label {
+    min-width: 0;
+  }
+
+  .date {
+    margin-right: 10px;
+    flex: 2;
+  }
+
+  .time {
+    flex: 1;
+  }
+}
+
+.step-buttons {
+  display: flex;
+
+  .right {
+    margin-right: 0;
+    margin-left: auto;
+  }
+}
+
+.end-date-toggle {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+
+.upload-preview {
+  background: center center;
+  background-size: cover;
+  height: 300px;
+  margin-bottom: 10px;
+}
+.upload-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  margin: 10px auto;
+  border: 1px dashed black;
+
+  &.dragover {
+    border: 1px dashed red;
+  }
+}
+
+.info {
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: center;
+}

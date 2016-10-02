@@ -16,16 +16,33 @@ export class EventService {
 
   saveEvent(event: Event) {
     let key = event['$key'];
+
+
+    let tags = event.tags;
+    let tagObj = {};
+    tags.forEach(tag => {
+      tagObj[tag] = true;
+    });
+    event.tags = <any>tagObj;
+
+
     if (key) {
       delete event['$key'];
-      this.getListOfEvents().update(key, event);
+      key = this.getListOfEvents().update(key, event).key;
       return;
     }
+
+    key = this.getListOfEvents().push(event).key;
+
+    if (!event.imageDataUrl) return;
+
+    this._af.database.object(this.EVENT_IMAGES_LOCATION).update({[key] : event.imageDataUrl});
+
   }
 
   getAllPublicEvents(): Observable<Event[]> {
     return Observable.create(observer => {
-      this.getListOfEvents().map(events => this.loadImagesForEvents(events)).subscribe(events => observer.next(events));
+      this.getListOfEvents().map(events => this.loadImagesForEvents(events)).map(events => this.mapTagsToStringArray(events)).subscribe(events => observer.next(events));
     })
   }
 
@@ -34,6 +51,7 @@ export class EventService {
       this.getListOfEvents()
         .map(events => this.filterEventsForUserInput(events, location, tags))
         .map(events => this.loadImagesForEvents(events))
+        .map(events => this.mapTagsToStringArray(events))
         .subscribe(events => observer.next(events));
     });
   }
@@ -43,6 +61,13 @@ export class EventService {
       this._af.database.object(`${this.EVENT_IMAGES_LOCATION}/${event.$key}`).subscribe(v => {
         event.imageDataUrl = v['$value']
       });
+      return event;
+    });
+  }
+
+  private mapTagsToStringArray(events) {
+    return events.map(event => {
+      if (event.tags) event.tags = Object.keys(event.tags);
       return event;
     });
   }
