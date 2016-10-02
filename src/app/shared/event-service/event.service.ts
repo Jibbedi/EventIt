@@ -3,6 +3,7 @@ import {AngularFire, FirebaseListObservable}from 'angularfire2'
 import {Observable} from "rxjs/Observable";
 import {Address} from "../../model/address";
 import {Event} from "../../model/event";
+import {UserService} from "../user-service/user.service";
 
 @Injectable()
 export class EventService {
@@ -11,7 +12,7 @@ export class EventService {
   private EVENTS_LOCATION = '/events';
   private EVENT_IMAGES_LOCATION = '/eventImages';
 
-  constructor(private _af: AngularFire) {
+  constructor(private _af: AngularFire, private userService: UserService) {
   }
 
   saveEvent(event: Event) {
@@ -19,6 +20,7 @@ export class EventService {
 
 
     let tags = event.tags;
+    console.log(event.tags);
     let tagObj = {};
     tags.forEach(tag => {
       tagObj[tag] = true;
@@ -34,15 +36,26 @@ export class EventService {
 
     key = this.getListOfEvents().push(event).key;
 
+
+    if (Object.keys(event.guests).length > 0) {
+      Object.keys(event.guests).forEach(userKey => {
+        console.log('setting event key', userKey);
+        this._af.database.object('/users/' + userKey + '/invitations/').update({[key]: false});
+      });
+    }
+
+    this._af.database.object('/users/' + this.userService.authToken + '/events').update({[key]: true});
+
     if (!event.imageDataUrl) return;
 
-    this._af.database.object(this.EVENT_IMAGES_LOCATION).update({[key] : event.imageDataUrl});
+    this._af.database.object(this.EVENT_IMAGES_LOCATION).update({[key]: event.imageDataUrl});
+
 
   }
 
   getAllPublicEvents(): Observable<Event[]> {
     return Observable.create(observer => {
-      this.getListOfEvents().map(events => this.loadImagesForEvents(events)).map(events => this.mapTagsToStringArray(events)).subscribe(events => observer.next(events));
+      this.getListOfEvents().map(events => this.loadImagesForEvents(events)).map(events => this.mapTagsToStringArrayForEvents(events)).subscribe(events => observer.next(events));
     })
   }
 
@@ -51,10 +64,44 @@ export class EventService {
       this.getListOfEvents()
         .map(events => this.filterEventsForUserInput(events, location, tags))
         .map(events => this.loadImagesForEvents(events))
-        .map(events => this.mapTagsToStringArray(events))
+        .map(events => this.mapTagsToStringArrayForEvents(events))
         .subscribe(events => observer.next(events));
     });
   }
+
+  getInvitationEventsForUser(): Observable<Event[]> {
+    return this.getUserEventsForPath('/events');
+  }
+
+  getEventsForUser(): Observable<Event[]> {
+    return this.getUserEventsForPath('/invitations');
+  }
+
+  private getUserEventsForPath(path : string) : Observable<Event[]> {
+    return Observable.create(observer => {
+      this._af.database.list('/users/' + this.userService.authToken + path).map(eventIds => this.getEventsForEventIds(eventIds)).subscribe(events => observer.next(events));
+    })
+  }
+
+  private getEventsForEventIds(eventIds) {
+    return eventIds.map(eventId => {
+
+      let eventObj = {};
+
+      let event =  this._af.database.object('/events/' + eventId.$key).map(e => this.mapTagsToStringArray(e)).subscribe(e => {
+        for (let key in e) {
+          let value = e[key];
+          eventObj[key] = value;
+        }
+      });
+
+      let eventImage = this._af.database.object('/eventImages' + eventId.$key).subscribe(image => {
+        eventObj['imageDataUrl'] = image['$value'];
+      });
+
+      return eventObj;
+    })
+  };
 
   private loadImagesForEvents(events) {
     return events.map(event => {
@@ -65,11 +112,16 @@ export class EventService {
     });
   }
 
-  private mapTagsToStringArray(events) {
+  private mapTagsToStringArrayForEvents(events) {
     return events.map(event => {
-      if (event.tags) event.tags = Object.keys(event.tags);
+      this.mapTagsToStringArray(event);
       return event;
     });
+  }
+
+  private mapTagsToStringArray(event) {
+    if (event.tags) event.tags = Object.keys(event.tags);
+    return event;
   }
 
   private filterEventsForUserInput(events, location: Address, tagsInput: string[]) {

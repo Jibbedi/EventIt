@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFire, AuthProviders, AuthMethods, AngularFireAuth} from 'angularfire2'
+import {User} from "../../model/user";
 
 @Injectable()
 export class UserService {
@@ -8,7 +9,7 @@ export class UserService {
   }
 
 
-  public authToken : string = 'TEST_TOKEN';
+  public authToken : string = 'GYx57l5yFvTkWNXv7pMpVXKF1iq1';
 
   public prefilledData : {email : string, password : string};
 
@@ -33,12 +34,19 @@ export class UserService {
     let signUp = new Promise((resolve, reject) => {
       this._af.auth.createUser({email: email, password: password}).then(auth => {
         this.authToken = auth.uid;
+
+        let newUser = new User();
+        newUser.email = email;
+        this._af.database.object('/users/' + this.authToken).update(newUser);
+
         resolve(true)
       }).catch(error => {
         console.log('error', error);
         reject(error)
       });
     });
+
+
 
     return signUp;
 

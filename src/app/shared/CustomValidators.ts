@@ -22,7 +22,7 @@ export class CustomValidators {
       return null;
     }
 
-    const error = {eventPrivateAndNoInvitations : true};
+    const error = {eventPrivateAndNoInvitations: true};
     inviteUsersControl.setErrors(error);
     return error;
   }

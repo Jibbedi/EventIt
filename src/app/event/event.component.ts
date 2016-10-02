@@ -1,6 +1,7 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 import {Event} from "../model/event";
 import {EventParticipationService} from "../shared/event-participation-service/event-participation.service";
+
 
 @Component({
   moduleId: module.id,
@@ -16,6 +17,9 @@ export class EventComponent {
 
   @Input()
   event: Event;
+
+  @Input()
+  sharable : boolean = false;
 
   constructor(private _participationService: EventParticipationService) {
   }
@@ -55,5 +59,13 @@ export class EventComponent {
   getNumberOfParticipants() {
     let numberOfParticipants = this._participationService.numberOfParticipants(this.event);
     return `${numberOfParticipants} ${(numberOfParticipants == 1) ? 'Participant' : 'Participants'}`;
+  }
+
+  showTwitter(event) {
+    window.open(`https://twitter.com/intent/tweet?text=${this.getTwitterText()}&hashtags=udacity&via=Jibbedi`,'_blank',"height=250,width=500");
+  }
+
+  getTwitterText() : string {
+    return `I am visiting the event ${this.event.name} by ${this.event.host}. Check it out on EventIt.`
   }
 }

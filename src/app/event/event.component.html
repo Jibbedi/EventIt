@@ -1,49 +1,57 @@
 <div class="headline-image" [ngStyle]="{backgroundImage: getBackgroundImageUrl()}">&nbsp;</div>
 <div class="content">
-    <h5 class="text-xs-center">{{event.name}}</h5>
+  <h5 class="text-xs-center">{{event.name}}</h5>
 
-    <p class="intro-message text-xs-center">{{getOptionalMessage()}}</p>
-    <p class="show-description-toggle text-xs-center" (click)="toggleShowCompleteDescription()" *ngIf="shouldDisplayToggleButton()">
-        <span *ngIf="!showCompleteDescription">Show</span>
-        <span *ngIf="showCompleteDescription">Hide</span>
-        complete description
-    </p>
+  <p class="intro-message text-xs-center">{{getOptionalMessage()}}</p>
+  <p class="show-description-toggle text-xs-center" (click)="toggleShowCompleteDescription()"
+     *ngIf="shouldDisplayToggleButton()">
+    <span *ngIf="!showCompleteDescription">Show</span>
+    <span *ngIf="showCompleteDescription">Hide</span>
+    complete description
+  </p>
 
-    <svg height="10" width="100%">
-        <line x1="0" y1="0" x2="100%" y2="0" style="stroke:rgb(0,0,0);stroke-width:2"/>
-    </svg>
+  <svg height="10" width="100%">
+    <line x1="0" y1="0" x2="100%" y2="0" style="stroke:rgb(0,0,0);stroke-width:2"/>
+  </svg>
 
-    <div>
-        <i class="fa fa-map-marker"></i>
-        <span>{{event.location.cityName}},{{event.location.country}}</span>
-    </div>
+  <div>
+    <i class="fa fa-map-marker"></i>
+    <span>{{event.location?.cityName}},{{event.location?.country}}</span>
+  </div>
 
-    <div>
-        <i class="fa fa-calendar"></i>
-        <span>{{event.startDate}} <span *ngIf="event.endDate">- {{event.endDate}}</span></span>
-    </div>
+  <div>
+    <i class="fa fa-calendar"></i>
+    <span>{{event.startDate}} <span *ngIf="event.endDate">- {{event.endDate}}</span></span>
+  </div>
 
-    <div>
-        <i class="fa fa-user"></i>
-        <span>{{event.host}}</span>
-    </div>
+  <div>
+    <i class="fa fa-user"></i>
+    <span>{{event.host}}</span>
+  </div>
 
-    <div>
-        <i class="fa fa-tags"></i>
-        <span>{{getTagList()}}</span>
-    </div>
+  <div>
+    <i class="fa fa-tags"></i>
+    <span>{{getTagList()}}</span>
+  </div>
 
   <div>
     <i class="fa fa-users"></i>
     <span>{{getNumberOfParticipants()}}</span>
   </div>
 
-    <div class="text-xs-right">
-        <button class="btn btn-danger participate-toggle" (click)="toggleParticipation()">
-            <span *ngIf="!isUserParticipating()"><i class="fa fa-check"></i> Participate</span>
-            <span *ngIf="isUserParticipating()"><i class="fa fa-times"></i> Don't participate</span>
-        </button>
-    </div>
+  <div class="text-xs-right">
+    <button class="btn btn-danger participate-toggle" (click)="toggleParticipation()">
+      <span *ngIf="!isUserParticipating()"><i class="fa fa-check"></i> Participate</span>
+      <span *ngIf="isUserParticipating()"><i class="fa fa-times"></i> Don't participate</span>
+    </button>
+  </div>
+
+  <div *ngIf="sharable && event">
+    <button (click)="showTwitter($event)" class="twitter-button">
+       <i class="fa fa-twitter"></i> Tweet
+    </button>
+  </div>
+
 </div>
 
 

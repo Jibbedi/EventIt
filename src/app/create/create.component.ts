@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators, FormArray, FormControl} from "@angul
 import {CustomValidators} from "../shared/CustomValidators";
 import {EventService} from "../shared/event-service/event.service";
 import {Event} from "../model/event";
+import {Router} from "@angular/router";
 
 
 declare var google;
@@ -38,7 +39,7 @@ export class CreateComponent implements AfterViewInit {
 
   createEventForm: FormGroup;
 
-  constructor(private _locationService: LocationService, private _addressParsingService: AddressParsingService, private eventService: EventService, private _af: AngularFire, private _fb: FormBuilder) {
+  constructor(private _locationService: LocationService, private _addressParsingService: AddressParsingService, private eventService: EventService, private _af: AngularFire, private _fb: FormBuilder, private _router : Router) {
     this.tags = this._af.database.list('/tags');
 
     this.createEventForm = this._fb.group({
@@ -47,10 +48,10 @@ export class CreateComponent implements AfterViewInit {
       dates: this._fb.array([
         this.createDateFormGroup()
       ]),
-      invitationGroup : this._fb.group({
+      invitationGroup: this._fb.group({
         publicEvent: [true],
         inviteUsers: ['']
-      },{validator: CustomValidators.eventPublicOrUsersInvited}),
+      }, {validator: CustomValidators.eventPublicOrUsersInvited}),
       eventType: ['', Validators.required],
       tags: ['', Validators.required],
       eventHost: ['', Validators.required],
@@ -122,6 +123,7 @@ export class CreateComponent implements AfterViewInit {
     let event = new Event();
 
     event.name = this.createEventForm.get('eventName').value;
+    console.log(this.selectedAddress);
     event.location = this.selectedAddress;
 
     event.startDate = (datesArray.at(0) as FormGroup).get('date').value;
@@ -134,10 +136,37 @@ export class CreateComponent implements AfterViewInit {
     event.host = this.createEventForm.get('eventHost').value;
     event.type = this.createEventForm.get('eventType').value;
     event.description = this.createEventForm.get('additionalInfo').value;
-    event.publicEvent = this.createEventForm.get('publicEvent').value;
+    event.publicEvent = this.createEventForm.get('invitationGroup').get('publicEvent').value;
     event.imageDataUrl = this.imageUrl;
 
+    if (!this.createEventForm.get('invitationGroup').get('publicEvent').value) {
+      let invitationEmails = this.createEventForm.get('invitationGroup').get('inviteUsers').value.split(',').map(email => email.trim());
+
+      let users = this._af.database.list('/users').map(users => {
+        return users.filter(user => {
+          console.log(user,invitationEmails);
+          return invitationEmails.includes(user.email);
+        });
+      });
+
+      users.subscribe(users => {
+        console.log('test');
+        let invites = {};
+        users.forEach(user => {
+          console.log(user);
+          invites = {[user.$key] : false};
+        });
+        console.log(invites);
+        event.guests = invites;
+        this.eventService.saveEvent(event);
+      });
+
+
+      return;
+    }
+
     this.eventService.saveEvent(event);
+    // this._router.navigateByUrl('/app/share');
 
   }
 
@@ -181,7 +210,7 @@ export class CreateComponent implements AfterViewInit {
     fr.onload = () => this.imageUrl = fr.result;
   }
 
-  moveToStep(index : number) {
+  moveToStep(index: number) {
     this.formCreationStep = index;
   }
 

@@ -17,7 +17,7 @@ export class EventParticipationService {
 
   isUserParticipatingInEvent(event: Event): boolean {
     if (!event.guests) return false;
-    return event.guests[this._userService.authToken];
+    return event.guests[this._userService.authToken] === true;
   }
 
 

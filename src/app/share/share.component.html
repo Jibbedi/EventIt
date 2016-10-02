@@ -1,3 +1,25 @@
-<p>
-  share works!
-</p>
+<h5>My events</h5>
+<div class="col-xs-12 events">
+
+  <div class="event-wrapper" *ngFor="let event of invitedEvents | async">
+    <event [sharable]="true" [event]="event"></event>
+  </div>
+
+  <div *ngIf="invitationsLoading">
+    Invitations are loading...
+  </div>
+
+</div>
+
+<h5>Invitations</h5>
+<div class="col-xs-12 events">
+
+  <div class="event-wrapper" *ngFor="let event of invitedEvents | async">
+    <event [event]="event"></event>
+  </div>
+
+  <div *ngIf="invitationsLoading">
+    Invitations are loading...
+  </div>
+
+</div>
