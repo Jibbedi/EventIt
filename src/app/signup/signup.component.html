@@ -1,9 +1,9 @@
-<form [formGroup]="signUpForm" (submit)="signUp()">
+<form [formGroup]="signUpForm" (submit)="signUp()" autocomplete="on">
   <h3>Nice to meet you!</h3>
   <div>
-    <label>
+    <label for="email">
       <div class="text-xs-left">What username do you like?</div>
-      <input formControlName="email" class="form-control" type="text" placeholder="Username">
+      <input id="email" formControlName="email" class="form-control" type="email" placeholder="Username">
     </label>
   </div>
 
@@ -15,16 +15,16 @@
   <!--</div>-->
 
   <div *ngIf="!signUpForm.controls.showPassword.value">
-    <label>
+    <label for="password">
       <div class="text-xs-left">Use a secure password.</div>
-      <input formControlName="password" class="form-control" type="password" placeholder="Password">
+      <input id="password" formControlName="password" class="form-control" type="password" placeholder="Password">
     </label>
   </div>
 
   <div *ngIf="signUpForm.controls.showPassword.value">
-    <label>
+    <label for="visiblePassword">
       <div class="text-xs-left">Use a secure password.</div>
-      <input formControlName="visiblePassword" class="form-control" type="text" placeholder="Password">
+      <input id="visiblePassword" formControlName="visiblePassword" class="form-control" type="text" placeholder="Password">
     </label>
   </div>
 

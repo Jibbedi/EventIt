@@ -18,16 +18,16 @@
 <div>
   <form [formGroup]="userDetailForm">
     <div>
-      <label>
+      <label for="name">
         What's your name?
-        <input formControlName="name" placeholder="e.g. John Doe" class="form-control">
+        <input id="name" formControlName="name" placeholder="e.g. John Doe" class="form-control">
       </label>
     </div>
 
     <div>
-      <label>
+      <label for="company">
         What company do you work for?
-        <input formControlName="company" placeholder="e.g. Example Ltd." class="form-control">
+        <input id="company" formControlName="company" placeholder="e.g. Example Ltd." class="form-control">
       </label>
     </div>
 

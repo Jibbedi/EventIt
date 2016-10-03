@@ -8,20 +8,20 @@
         <span (click)="moveToStep(2)" [ngClass]="{active: formCreationStep == 2}">Upload an image</span>
       </div>
       <div class="form-wrapper">
-        <form [formGroup]="createEventForm">
+        <form [formGroup]="createEventForm" autocomplete="on">
           <div [hidden]="formCreationStep != 0">
             <div>
-              <label>
+              <label for="eventName">
                 <span>What's the name?*</span>
-                <input formControlName="eventName" placeholder="Give your event a name" class="form-control">
+                <input id="eventName" formControlName="eventName" placeholder="Give your event a name" class="form-control">
                 <error-messages [control]="createEventForm.get('eventName')"></error-messages>
               </label>
             </div>
 
             <div>
-              <label>
+              <label for="location">
                 <span>Where does it happen?*</span>
-                <input formControlName="location" placeholder="in New York, NYC, ..." id="autocomplete"
+                <input id="location" formControlName="location" placeholder="in New York, NYC, ..." id="autocomplete"
                        class="form-control">
                 <error-messages [control]="createEventForm.get('location')"></error-messages>
               </label>
@@ -54,16 +54,16 @@
 
             <div formGroupName="invitationGroup">
               <div>
-                <label>
-                  <input formControlName="publicEvent" type="checkbox">
+                <label for="publicEvent">
+                  <input id="publicEvent" formControlName="publicEvent" type="checkbox">
                   <span>Make event public?</span>
                 </label>
               </div>
 
               <div *ngIf="!createEventForm.controls.invitationGroup.get('publicEvent').value">
-                <label>
+                <label for="inviteUsers">
                   <span>Invite Users*</span>
-                  <input formControlName="inviteUsers" class="form-control"
+                  <input id="inviteUsers" formControlName="inviteUsers" class="form-control"
                          placeholder="e.g. foo@bar.com, example@example.com">
                   <error-messages [control]="createEventForm.controls.invitationGroup.get('inviteUsers')"></error-messages>
                 </label>
@@ -75,9 +75,9 @@
 
           <div [hidden]="formCreationStep != 1">
             <div>
-              <label>
+              <label for="eventType">
                 <span>What kind of event?*</span>
-                <input formControlName="eventType" list="category" class="form-control">
+                <input id="eventType" formControlName="eventType" list="category" class="form-control">
                 <datalist id="category">
                   <option *ngFor="let eventType of eventTypes | async">
                     {{eventType}}
@@ -88,26 +88,26 @@
             </div>
 
             <div>
-              <label>
+              <label for="tags">
                 <span>Put tags on it*</span>
-                <input formControlName="tags" class="form-control" placeholder="e.g. javascript, angular">
+                <input id="tags" formControlName="tags" class="form-control" placeholder="e.g. javascript, angular">
                 <error-messages [control]="createEventForm.get('tags')"></error-messages>
               </label>
             </div>
 
 
             <div>
-              <label>
+              <label for="eventHost">
                 <span>Who is hosting?*</span>
-                <input formControlName="eventHost" class="form-control">
+                <input id="eventHost" formControlName="eventHost" class="form-control">
                 <error-messages [control]="createEventForm.get('eventHost')"></error-messages>
               </label>
             </div>
 
             <div>
-              <label>
+              <label for="additionalInfo">
                 <span>Additional infos...</span>
-                <textarea formControlName="additionalInfo" class="form-control"></textarea>
+                <textarea id="additionalInfo" formControlName="additionalInfo" class="form-control"></textarea>
               </label>
             </div>
           </div>
@@ -116,9 +116,9 @@
             <div class="upload-preview" [style.backgroundImage]="uploadedImage" *ngIf="uploadedImage"></div>
             <div class="upload-wrapper" *ngIf="!uploadedImage">
               <div>
-                <label>
+                <label for="img-upload">
                   Select an image from your device.
-                  <input type="file" (change)="handleInputChange($event)">
+                  <input id="img-upload" type="file" (change)="handleInputChange($event)">
                 </label>
                 <div class="upload-area" dropzone="copy" [class.dragover]="dragover" (dragover)="handleDragover($event)"
                      (drop)="handleDrop($event)">

@@ -1,11 +1,11 @@
-<form [formGroup]="loginForm" (submit)="login()">
-  <label>
+<form [formGroup]="loginForm" (submit)="login()" autocomplete="on">
+  <label for="email">
     <div class="text-xs-left">Username</div>
-    <input formControlName="email" class="form-control" type="text" placeholder="Username">
+    <input id="email" formControlName="email" class="form-control" type="email" placeholder="Username">
   </label>
-  <label>
+  <label for="password">
     <div class="text-xs-left">Password</div>
-    <input formControlName="password" class="form-control" type="password" placeholder="Password">
+    <input id="password" formControlName="password" class="form-control" type="password" placeholder="Password">
   </label>
   <span class="login-button-wrapper">
     <button class="btn btn-primary">Login</button>
