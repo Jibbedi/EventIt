@@ -2,13 +2,16 @@
 <div class="content">
   <h5 class="text-xs-center">{{event.name}}</h5>
 
-  <p class="intro-message text-xs-center">{{getOptionalMessage()}}</p>
-  <p class="show-description-toggle text-xs-center" (click)="toggleShowCompleteDescription()"
-     *ngIf="shouldDisplayToggleButton()">
-    <span *ngIf="!showCompleteDescription">Show</span>
-    <span *ngIf="showCompleteDescription">Hide</span>
-    complete description
-  </p>
+  <div class="intro-message-wrapper">
+    <p class="intro-message text-xs-center">{{getOptionalMessage()}}</p>
+    <p class="show-description-toggle text-xs-center" (click)="toggleShowCompleteDescription()"
+       *ngIf="shouldDisplayToggleButton()">
+      <span *ngIf="!showCompleteDescription">Show</span>
+      <span *ngIf="showCompleteDescription">Hide</span>
+      complete description
+    </p>
+  </div>
+
 
   <svg height="10" width="100%">
     <line x1="0" y1="0" x2="100%" y2="0" style="stroke:rgb(0,0,0);stroke-width:2"/>
