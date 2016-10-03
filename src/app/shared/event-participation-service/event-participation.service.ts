@@ -12,7 +12,7 @@ export class EventParticipationService {
 
   numberOfParticipants(event: Event): number {
     if (!event.guests) return 0;
-    return Object.keys(event.guests).length;
+    return Object.keys(event.guests).filter(key => event.guests[key] && event.guests[key] === true).length;
   }
 
   isUserParticipatingInEvent(event: Event): boolean {
@@ -22,14 +22,9 @@ export class EventParticipationService {
 
 
   toggleParticipation(event: Event) {
-    if (!this.isUserParticipatingInEvent(event)) {
-      if (!event.guests) event.guests = {};
-      event.guests[this._userService.authToken] = true;
-    }
-    else {
-      delete event.guests[this._userService.authToken];
-    }
-
+    if (!event.guests) event.guests = {};
+    event.guests[this._userService.authToken] = !this.isUserParticipatingInEvent(event);
+    console.log(event.guests);
     this.eventService.saveEvent(event);
   }
 
