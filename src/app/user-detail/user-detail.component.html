@@ -32,5 +32,7 @@
     </div>
 
     <button (click)="saveUserData()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+    <span *ngIf="savingData"><i class="fa fa-cog fa-spin"></i> Saving...</span>
+    <span *ngIf="saved"><i class="fa fa-check"></i> Data saved.</span>
   </form>
 </div>

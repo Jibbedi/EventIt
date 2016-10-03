@@ -20,10 +20,13 @@ export class UserService {
     return this.authToken != null;
   }
 
-  saveUserData(user: User) {
-    this.userData = user;
-    this.setUserToLocalStorage();
-    this._af.database.object('/users/' + this.authToken).update(this.userData);
+  saveUserData(user: User) : Promise<boolean> {
+    return new Promise((resolve,reject) => {
+      this.userData = user;
+      this.setUserToLocalStorage();
+      this._af.database.object('/users/' + this.authToken).update({name : this.userData.name, company: this.userData.company}).then(v => resolve(true));
+    })
+
   }
 
   logout() {

@@ -15,6 +15,8 @@ export class UserDetailComponent {
   firstTime: boolean;
   userDetailForm: FormGroup;
   userData: User;
+  savingData = false;
+  saved = false;
 
   constructor(private _route: ActivatedRoute, private _fb: FormBuilder, private userService: UserService) {
     _route.queryParams.subscribe(v => {
@@ -28,17 +30,24 @@ export class UserDetailComponent {
       'name': [this.userData.name],
       'company': [this.userData.company]
     });
+
+    this.userDetailForm.valueChanges.subscribe(v => this.saved = false);
   }
 
   saveUserData() {
     if (!this.userDetailForm.valid) return;
+    this.savingData = true;
+    this.saved = false;
 
     console.log('saving');
 
     this.userData.name = this.userDetailForm.get('name').value;
     this.userData.company = this.userDetailForm.get('company').value;
 
-    this.userService.saveUserData(this.userData);
+    this.userService.saveUserData(this.userData).then(() => {
+      this.savingData = false;
+      this.saved = true;
+    });
   }
 
 }
