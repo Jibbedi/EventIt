@@ -69,9 +69,10 @@ export class UserService {
         let newUser = new User();
         newUser.email = email;
         this.userData = newUser;
-        this.setUserToLocalStorage();
-
         this._af.database.object('/users/' + this.authToken).update(newUser);
+
+        this.userData['$key'] = this.authToken;
+        this.setUserToLocalStorage();
 
         resolve(true)
       }).catch(error => {
