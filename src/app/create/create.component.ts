@@ -131,7 +131,6 @@ export class CreateComponent implements AfterViewInit {
   }
 
   createEvent() {
-    console.log(this.createEventForm);
     if (!this.createEventForm.valid) return;
 
     const datesArray = (this.createEventForm.get('dates') as FormArray);
@@ -172,16 +171,20 @@ export class CreateComponent implements AfterViewInit {
         });
 
         event.invitations = invites;
-        this.eventService.saveEvent(event);
-        this._router.navigateByUrl('/app/share');
+        this.eventService.saveEvent(event).then(v => {
+          this._router.navigateByUrl('/app/share');
+        });
+
       });
 
 
       return;
     }
 
-    this.eventService.saveEvent(event);
-    this._router.navigateByUrl('/app/share');
+    console.log(event.tags);
+    this.eventService.saveEvent(event).then(v => {
+      this._router.navigateByUrl('/app/share');
+    });
   }
 
   handleDragover($event) {

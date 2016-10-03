@@ -15,60 +15,61 @@ export class EventService {
   constructor(private _af: AngularFire, private userService: UserService) {
   }
 
-  saveEvent(event: Event) {
-    let key = event['$key'];
+  saveEvent(event: Event): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      let key = event['$key'];
 
-    console.log(event);
+      console.log(event);
 
-    let tags = event.tags;
-    if (typeof tags == 'object') tags = Object.keys(tags);
-    if (tags) {
-      let tagObj = {};
-      tags.forEach(tag => {
-        tagObj[tag.trim()] = true;
-      });
-      event.tags = <any>tagObj;
-    }
-
-    if (key) {
-      delete event['$key'];
-      this.getListOfEvents().update(key, event)
-    }
-    else {
-      event.creatorId = this.userService.authToken;
-
-      key = this.getListOfEvents().push(event).key;
-
-      this._af.database.object('/users/' + this.userService.authToken + '/events').update({[key]: true});
-      this._af.database.object('/eventTypes/').update({[event.type]: true});
-
-      if (event.imageDataUrl) {
-        this._af.database.object(this.EVENT_IMAGES_LOCATION).update({[key]: event.imageDataUrl});
+      let tags = event.tags;
+      if (tags) {
+        let tagObj = {};
+        tags.forEach(tag => {
+          tagObj[tag.trim()] = true;
+        });
+        event.tags = <any>tagObj;
       }
 
-      console.log(event.invitations);
+      if (key) {
+        delete event['$key'];
+        this.getListOfEvents().update(key, event).then(v => resolve(true));
+      }
+      else {
+        event.creatorId = this.userService.authToken;
 
-      if (event.invitations) {
-        Object.keys(event.invitations).forEach(userKey => {
-          this._af.database.object('/users/' + userKey + '/invitations/').update({[key]: true});
+        key = this.getListOfEvents().push(event).key;
+
+        this._af.database.object('/users/' + this.userService.authToken + '/events').update({[key]: true}).then(v => resolve(true));
+        this._af.database.object('/eventTypes/').update({[event.type]: true});
+
+        if (event.imageDataUrl) {
+          this._af.database.object(this.EVENT_IMAGES_LOCATION).update({[key]: event.imageDataUrl});
+        }
+
+
+        if (event.invitations) {
+          Object.keys(event.invitations).forEach(userKey => {
+            this._af.database.object('/users/' + userKey + '/invitations/').update({[key]: true});
+          });
+        }
+      }
+
+
+      if (event.participants) {
+        Object.keys(event.participants).forEach(userKey => {
+          console.log(event.participants);
+          if (event.participants[userKey] == true) {
+            console.log('true');
+            this._af.database.object('/users/' + userKey + '/participations/').update({[key]: true});
+          }
+          else {
+            console.log(false);
+            this._af.database.object('/users/' + userKey + '/participations/' + key).remove();
+          }
         });
       }
-    }
+    })
 
-
-    if (event.participants) {
-      Object.keys(event.participants).forEach(userKey => {
-        console.log(event.participants);
-        if (event.participants[userKey] == true) {
-          console.log('true');
-          this._af.database.object('/users/' + userKey + '/participations/').update({[key]: true});
-        }
-        else {
-          console.log(false);
-          this._af.database.object('/users/' + userKey + '/participations/' + key).remove();
-        }
-      });
-    }
   }
 
   deleteEvent(event: Event) {
