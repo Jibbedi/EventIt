@@ -7,27 +7,30 @@ import {Observable} from "rxjs/Observable";
 export class UserService {
 
   constructor(private _af: AngularFire) {
+    this.getUserFromLocalStorage();
   }
 
 
   public authToken = null;
-  public userData : User = new User();
+  public userData: User = new User();
 
-  public prefilledData : {email : string, password : string};
+  public prefilledData: {email: string, password: string};
 
-  isLoggedIn() : boolean {
+  isLoggedIn(): boolean {
     return this.authToken != null;
   }
 
-  saveUserData(user : User) {
-    console.log(user);
+  saveUserData(user: User) {
     this.userData = user;
+    this.setUserToLocalStorage();
     this._af.database.object('/users/' + this.authToken).update(this.userData);
   }
 
   logout() {
     this.userData = null;
     this.authToken = null;
+    console.log('logout');
+    this.setUserToLocalStorage();
   }
 
   login(email: string, password: string): Promise<boolean> {
@@ -38,6 +41,7 @@ export class UserService {
 
         this._af.database.object('/users/' + this.authToken).subscribe(user => {
           this.userData = user;
+          this.setUserToLocalStorage();
           resolve(true)
         });
 
@@ -59,6 +63,7 @@ export class UserService {
         let newUser = new User();
         newUser.email = email;
         this.userData = newUser;
+        this.setUserToLocalStorage();
 
         this._af.database.object('/users/' + this.authToken).update(newUser);
 
@@ -68,7 +73,6 @@ export class UserService {
         reject(error)
       });
     });
-
 
 
     return signUp;
@@ -81,6 +85,21 @@ export class UserService {
       provider: AuthProviders.Password,
       method: AuthMethods.Password,
     };
+  }
+
+  private getUserFromLocalStorage() {
+    this.userData = JSON.parse(window.localStorage.getItem('USER'));
+    this.authToken = this.userData['$key'];
+  }
+
+  private setUserToLocalStorage() {
+    if (!this.userData) {
+      window.localStorage.removeItem('USER');
+    }
+    else {
+      window.localStorage.setItem('USER', JSON.stringify(this.userData));
+    }
+
   }
 
 }

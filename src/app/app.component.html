@@ -3,7 +3,7 @@
     <div class="button-wrapper" *ngIf="isLoggedIn">
       <a [routerLink]="'/app'">Show Events</a>
       <a [routerLink]="'/userDetail'">Edit User Details</a>
-      <a href="#" (click)="logout(event)">Logout</a>
+      <a href="#" (click)="logout($event)">Logout</a>
     </div>
 </div>
 <router-outlet></router-outlet>
