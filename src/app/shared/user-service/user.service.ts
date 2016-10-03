@@ -10,15 +10,24 @@ export class UserService {
   }
 
 
-  public authToken : string = 'GYx57l5yFvTkWNXv7pMpVXKF1iq1';
+  public authToken = null;
   public userData : User = new User();
 
   public prefilledData : {email : string, password : string};
+
+  isLoggedIn() : boolean {
+    return this.authToken != null;
+  }
 
   saveUserData(user : User) {
     console.log(user);
     this.userData = user;
     this._af.database.object('/users/' + this.authToken).update(this.userData);
+  }
+
+  logout() {
+    this.userData = null;
+    this.authToken = null;
   }
 
   login(email: string, password: string): Promise<boolean> {

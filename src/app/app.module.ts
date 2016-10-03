@@ -21,6 +21,8 @@ import {EventParticipationService} from "./shared/event-participation-service/ev
 import {ErrorMessagesComponent} from "./error-messages/error-messages.component";
 import {TwitterService} from "./shared/twitter-service/twitter.service";
 import {UserDetailComponent} from "./user-detail/user-detail.component";
+import {AuthGuardService} from "./shared/auth-guard-service/auth-guard.service";
+import {LoggedInGuardService} from "./shared/logged-in-guard/logged-in-guard.service";
 
 
 const routes = [
@@ -29,12 +31,12 @@ const routes = [
     {path : 'create', component: CreateComponent},
     {path : 'share', component: ShareComponent},
     {path : 'discover', component: DiscoverComponent}
-  ]},
-  {path : 'userDetail', component : UserDetailComponent},
+  ],canActivate : [AuthGuardService]},
+  {path : 'userDetail', component : UserDetailComponent,canActivate : [AuthGuardService]},
   {path: '', component: LandingComponent,children:[
     {path: 'signup', component: SignupComponent},
     {path: '**', component: LoginComponent},
-  ]},{path:'**',redirectTo:''}
+  ],canActivate : [LoggedInGuardService]},{path:'**',redirectTo:''}
 
 ];
 
@@ -49,7 +51,7 @@ export const firebaseConfig = {
   imports: [BrowserModule, HttpModule, FormsModule,ReactiveFormsModule, RouterModule,RouterModule.forRoot(routes), AngularFireModule.initializeApp(firebaseConfig)],
   declarations: [AppComponent, LoginComponent, LandingComponent, SignupComponent,EntryComponent, CreateComponent, ShareComponent, DiscoverComponent, EventComponent, ErrorMessagesComponent,UserDetailComponent],
   bootstrap: [AppComponent],
-  providers: [UserService, LocationService, AddressParsingService, EventService, EventParticipationService,TwitterService]
+  providers: [UserService, LocationService, AddressParsingService, EventService, EventParticipationService,TwitterService,AuthGuardService,LoggedInGuardService]
   })
 export class AppModule {
 }
