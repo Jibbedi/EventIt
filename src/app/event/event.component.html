@@ -39,7 +39,7 @@
     <span>{{getNumberOfParticipants()}}</span>
   </div>
 
-  <div class="text-xs-right">
+  <div class="text-xs-right" *ngIf="showParticipationButton">
     <button class="btn btn-danger participate-toggle" (click)="toggleParticipation()">
       <span *ngIf="!isUserParticipating()"><i class="fa fa-check"></i> Participate</span>
       <span *ngIf="isUserParticipating()"><i class="fa fa-times"></i> Don't participate</span>

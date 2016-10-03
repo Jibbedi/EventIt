@@ -21,6 +21,9 @@ export class EventComponent {
   @Input()
   sharable : boolean = false;
 
+  @Input()
+  showParticipationButton : boolean = true;
+
   constructor(private _participationService: EventParticipationService) {
   }
 

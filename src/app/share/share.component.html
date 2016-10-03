@@ -2,7 +2,7 @@
 <div class="col-xs-12 events">
 
   <div class="event-wrapper" *ngFor="let event of invitedEvents | async">
-    <event [sharable]="true" [event]="event"></event>
+    <event [sharable]="true" [showParticipationButton]="false" [event]="event"></event>
   </div>
 
   <div *ngIf="invitationsLoading">
