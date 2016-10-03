@@ -55,13 +55,18 @@ export class EventService {
 
   getAllPublicEvents(): Observable<Event[]> {
     return Observable.create(observer => {
-      this.getListOfEvents().map(events => this.loadImagesForEvents(events)).map(events => this.mapTagsToStringArrayForEvents(events)).subscribe(events => observer.next(events));
+      this.getListOfEvents()
+        .map(events => this.filterPublicEvents(events))
+        .map(events => this.loadImagesForEvents(events))
+        .map(events => this.mapTagsToStringArrayForEvents(events))
+        .subscribe(events => observer.next(events));
     })
   }
 
   getPublicEventsFilteredByLocationAndTags(location: Address, tags: string[]): Observable<Event[]> {
     return Observable.create(observer => {
       this.getListOfEvents()
+        .map(events => this.filterPublicEvents(events))
         .map(events => this.filterEventsForUserInput(events, location, tags))
         .map(events => this.loadImagesForEvents(events))
         .map(events => this.mapTagsToStringArrayForEvents(events))
@@ -77,7 +82,11 @@ export class EventService {
     return this.getUserEventsForPath('/invitations');
   }
 
-  private getUserEventsForPath(path : string) : Observable<Event[]> {
+  private filterPublicEvents(events) {
+    return events.filter(event => event.publicEvent);
+  }
+
+  private getUserEventsForPath(path: string): Observable<Event[]> {
     return Observable.create(observer => {
       this._af.database.list('/users/' + this.userService.authToken + path).map(eventIds => this.getEventsForEventIds(eventIds)).subscribe(events => observer.next(events));
     })
@@ -88,7 +97,7 @@ export class EventService {
 
       let eventObj = {};
 
-      let event =  this._af.database.object('/events/' + eventId.$key).map(e => this.mapTagsToStringArray(e)).subscribe(e => {
+      let event = this._af.database.object('/events/' + eventId.$key).map(e => this.mapTagsToStringArray(e)).subscribe(e => {
         for (let key in e) {
           let value = e[key];
           eventObj[key] = value;
