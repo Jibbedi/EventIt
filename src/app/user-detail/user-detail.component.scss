@@ -1,0 +1,22 @@
+:host {
+  padding: 20px;
+}
+
+.info {
+  margin-bottom: 20px;
+}
+
+form {
+  width: 50%;
+  min-width: 300px;
+  margin: 0 auto;
+
+  label {
+    width: 100%;
+  }
+
+  input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+}
+

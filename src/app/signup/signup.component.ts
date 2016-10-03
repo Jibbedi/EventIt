@@ -33,7 +33,7 @@ export class SignupComponent {
     if (!this.signUpForm.valid) return;
 
     this._userService.signUp(this.getValueOfControlWithName('email'), this.getValueOfControlWithName('password'))
-      .then(loginSuccessful => this._router.navigateByUrl('app'), failure => this.signUpError = failure);
+      .then(loginSuccessful => this._router.navigateByUrl('userDetail?first=true'), failure => this.signUpError = failure);
   }
 
   private getValueOfControlWithName(name) {

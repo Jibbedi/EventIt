@@ -75,6 +75,7 @@ const barrels: string[] = [
   'app/discover',
   'app/event',
   'app/error-messages',
+  'app/user-detail',
   /** @cli-barrel */
 ];
 

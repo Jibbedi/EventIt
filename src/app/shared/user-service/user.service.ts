@@ -11,15 +11,27 @@ export class UserService {
 
 
   public authToken : string = 'GYx57l5yFvTkWNXv7pMpVXKF1iq1';
+  public userData : User = new User();
 
   public prefilledData : {email : string, password : string};
+
+  saveUserData(user : User) {
+    console.log(user);
+    this.userData = user;
+    this._af.database.object('/users/' + this.authToken).update(this.userData);
+  }
 
   login(email: string, password: string): Promise<boolean> {
 
     let loginPromise = new Promise((resolve, reject) => {
       this._af.auth.login({email: email, password: password}, this.getPasswordAuthConfig()).then(auth => {
         this.authToken = auth.uid;
-        resolve(true)
+
+        this._af.database.object('/users/' + this.authToken).subscribe(user => {
+          this.userData = user;
+          resolve(true)
+        });
+
       }).catch(error => {
         console.log('error', error);
         reject(error)
@@ -37,6 +49,8 @@ export class UserService {
 
         let newUser = new User();
         newUser.email = email;
+        this.userData = newUser;
+
         this._af.database.object('/users/' + this.authToken).update(newUser);
 
         resolve(true)

@@ -1,0 +1,36 @@
+<div class="text-xs-center">
+
+  <div class="info" *ngIf="firstTime === true">
+    <h3>Thanks for signing up.</h3>
+    <p> Please take a few moments to give us additional informations about yourself.</p>
+    <p>This will help us autofill your information when you create an event.</p>
+    <p>You can come back anytime by clicking the link in the top right corner.</p>
+    <button [routerLink]="'/app'" class="btn bg-primary">Not right now, just take me to the events.</button>
+  </div>
+
+  <div class="info" *ngIf="firstTime === false">
+    <h3>Edit your informations</h3>
+    <p>This will help us autofill your information when you create an event.</p>
+  </div>
+
+</div>
+
+<div>
+  <form [formGroup]="userDetailForm">
+    <div>
+      <label>
+        What's your name?
+        <input formControlName="name" placeholder="e.g. John Doe" class="form-control">
+      </label>
+    </div>
+
+    <div>
+      <label>
+        What company do you work for?
+        <input formControlName="company" placeholder="e.g. Example Ltd." class="form-control">
+      </label>
+    </div>
+
+    <button (click)="saveUserData()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+  </form>
+</div>
