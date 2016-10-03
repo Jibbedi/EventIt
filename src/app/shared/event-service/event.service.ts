@@ -21,6 +21,7 @@ export class EventService {
     console.log(event);
 
     let tags = event.tags;
+    if (typeof tags == 'object') tags = Object.keys(tags);
     if (tags) {
       let tagObj = {};
       tags.forEach(tag => {
@@ -35,22 +36,32 @@ export class EventService {
     }
     else {
       event.creatorId = this.userService.authToken;
+
       key = this.getListOfEvents().push(event).key;
+
+      this._af.database.object('/users/' + this.userService.authToken + '/events').update({[key]: true});
+      this._af.database.object('/eventTypes/').update({[event.type]: true});
+
+      if (event.imageDataUrl) {
+        this._af.database.object(this.EVENT_IMAGES_LOCATION).update({[key]: event.imageDataUrl});
+      }
+
+      console.log(event.invitations);
+
+      if (event.invitations) {
+        Object.keys(event.invitations).forEach(userKey => {
+          this._af.database.object('/users/' + userKey + '/invitations/').update({[key]: true});
+        });
+      }
     }
 
-
-    if (event.invitations) {
-      Object.keys(event.invitations).forEach(userKey => {
-        this._af.database.object('/users/' + userKey + '/invitations/').update({[key]: true});
-      });
-    }
 
     if (event.participants) {
       Object.keys(event.participants).forEach(userKey => {
         console.log(event.participants);
         if (event.participants[userKey] == true) {
           console.log('true');
-          this._af.database.object('/users/' + userKey + '/participations/').update({[key] : true});
+          this._af.database.object('/users/' + userKey + '/participations/').update({[key]: true});
         }
         else {
           console.log(false);
@@ -58,17 +69,6 @@ export class EventService {
         }
       });
     }
-
-    this._af.database.object('/eventTypes/').update({[event.type] : true});
-
-
-    this._af.database.object('/users/' + this.userService.authToken + '/events').update({[key]: true});
-
-    if (!event.imageDataUrl) return;
-
-    this._af.database.object(this.EVENT_IMAGES_LOCATION).update({[key]: event.imageDataUrl});
-
-
   }
 
   deleteEvent(event: Event) {
@@ -132,7 +132,7 @@ export class EventService {
 
   private getUserEventsForPath(path: string): Observable<Event[]> {
     return Observable.create(observer => {
-      this._af.database.list('/users/' + this.userService.authToken + path).map(eventIds => this.getEventsForEventIds(eventIds)).subscribe(events => observer.next(events));
+      this._af.database.list('/users/' + this.userService.authToken + path).map(eventIds => this.getEventsForEventIds(eventIds)).map(e => this.mapTagsToStringArray(e)).subscribe(events => observer.next(events));
     })
   }
 

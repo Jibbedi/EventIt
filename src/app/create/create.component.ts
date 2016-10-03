@@ -26,6 +26,7 @@ export class CreateComponent implements AfterViewInit {
   dragover = false;
   imageUrl = '';
   selectedAddress: Address = null;
+  eventCreated = false;
 
   get uploadedImage(): string {
     if (this.imageUrl.length == 0) return null;
@@ -148,6 +149,7 @@ export class CreateComponent implements AfterViewInit {
     }
 
     event.tags = this.createEventForm.get('tags').value.split(',');
+    console.log('saving tags...',event.tags);
     event.host = this.createEventForm.get('eventHost').value;
     event.type = this.createEventForm.get('eventType').value;
     event.description = this.createEventForm.get('additionalInfo').value;
@@ -168,12 +170,14 @@ export class CreateComponent implements AfterViewInit {
         let invites = {};
         users.forEach(user => {
           console.log(user);
-          invites = {[user.$key] : false};
+          invites = {[user.$key] : true};
         });
+
         console.log(invites);
         event.invitations = invites;
+        console.log(event.tags);
         this.eventService.saveEvent(event);
-        this._router.navigateByUrl('/app/share');
+        this.eventCreated = true;
       });
 
 
@@ -181,7 +185,7 @@ export class CreateComponent implements AfterViewInit {
     }
 
     this.eventService.saveEvent(event);
-    this._router.navigateByUrl('/app/share');
+    this.eventCreated = true;
 
   }
 

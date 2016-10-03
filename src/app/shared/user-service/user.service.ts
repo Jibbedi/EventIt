@@ -20,11 +20,14 @@ export class UserService {
     return this.authToken != null;
   }
 
-  saveUserData(user: User) : Promise<boolean> {
-    return new Promise((resolve,reject) => {
+  saveUserData(user: User): Promise<boolean> {
+    return new Promise((resolve, reject) => {
       this.userData = user;
       this.setUserToLocalStorage();
-      this._af.database.object('/users/' + this.authToken).update({name : this.userData.name, company: this.userData.company}).then(v => resolve(true));
+      this._af.database.object('/users/' + this.authToken).update({
+        name: this.userData.name,
+        company: this.userData.company
+      }).then(v => resolve(true));
     })
 
   }
@@ -92,7 +95,9 @@ export class UserService {
 
   private getUserFromLocalStorage() {
     this.userData = JSON.parse(window.localStorage.getItem('USER'));
-    this.authToken = this.userData['$key'];
+    if (this.userData) {
+      this.authToken = this.userData['$key'];
+    }
   }
 
   private setUserToLocalStorage() {
