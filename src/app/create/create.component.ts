@@ -8,6 +8,7 @@ import {CustomValidators} from "../shared/CustomValidators";
 import {EventService} from "../shared/event-service/event.service";
 import {Event} from "../model/event";
 import {Router} from "@angular/router";
+import {UserService} from "../shared/user-service/user.service";
 
 
 declare var google;
@@ -39,7 +40,7 @@ export class CreateComponent implements AfterViewInit {
 
   createEventForm: FormGroup;
 
-  constructor(private _locationService: LocationService, private _addressParsingService: AddressParsingService, private eventService: EventService, private _af: AngularFire, private _fb: FormBuilder, private _router : Router) {
+  constructor(private _locationService: LocationService, private _addressParsingService: AddressParsingService, private eventService: EventService, private userService : UserService, private _af: AngularFire, private _fb: FormBuilder, private _router : Router) {
     this.eventTypes = this.eventService.getEventTypes();
 
     this.createEventForm = this._fb.group({
@@ -54,7 +55,7 @@ export class CreateComponent implements AfterViewInit {
       }, {validator: CustomValidators.eventPublicOrUsersInvited}),
       eventType: ['', Validators.required],
       tags: ['', Validators.required],
-      eventHost: ['', Validators.required],
+      eventHost: [this.getHostDefaultString(), Validators.required],
       additionalInfo: ['']
     })
 
@@ -71,6 +72,20 @@ export class CreateComponent implements AfterViewInit {
     else {
       datesGroup.push(this.createDateFormGroup());
     }
+  }
+
+  private getHostDefaultString() {
+    let string = '';
+
+    if (this.userService.userData.name) {
+      string = this.userService.userData.name;
+    }
+
+    if (this.userService.userData.company) {
+      string += this.userService.userData.name ? ` (${this.userService.userData.company})` : this.userService.userData.company;
+    }
+
+    return string;
   }
 
   private createDateFormGroup(): FormGroup {
