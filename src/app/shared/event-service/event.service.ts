@@ -53,6 +53,18 @@ export class EventService {
 
   }
 
+  deleteEvent(event: Event) {
+    let key = event['$key'];
+    if (!key) return;
+    this._af.database.list('/events').remove(key);
+    this._af.database.list('/users').subscribe(users => {
+      users.forEach(user => {
+        this._af.database.object('/users/' + user.$key + '/invitations/' + key).remove();
+        this._af.database.object('/users/' + user.$key + '/events/' + key).remove();
+      })
+    });
+  }
+
   getAllPublicEvents(): Observable<Event[]> {
     return Observable.create(observer => {
       this.getListOfEvents()

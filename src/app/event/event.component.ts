@@ -2,6 +2,7 @@ import {Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild} from '@a
 import {Event} from "../model/event";
 import {EventParticipationService} from "../shared/event-participation-service/event-participation.service";
 import {TwitterService} from "../shared/twitter-service/twitter.service";
+import {EventService} from "../shared/event-service/event.service";
 
 
 @Component({
@@ -25,7 +26,7 @@ export class EventComponent {
   @Input()
   showParticipationButton : boolean = true;
 
-  constructor(private _participationService: EventParticipationService, private _twitterService : TwitterService) {
+  constructor(private _participationService: EventParticipationService, private _twitterService : TwitterService,private _eventService : EventService) {
   }
 
   getOptionalMessage(): string {
@@ -67,6 +68,10 @@ export class EventComponent {
 
   showTwitter(event) {
     this._twitterService.showModal(this.getTwitterText(),['udacity'],'jibbedi');
+  }
+
+  deleteEvent() {
+    this._eventService.deleteEvent(this.event);
   }
 
   getTwitterText() : string {
