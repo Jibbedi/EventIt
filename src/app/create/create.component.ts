@@ -161,21 +161,17 @@ export class CreateComponent implements AfterViewInit {
 
       let users = this._af.database.list('/users').map(users => {
         return users.filter(user => {
-          console.log(user,invitationEmails);
           return invitationEmails.includes(user.email);
         });
-      });
+      }).take(1);
 
       users.subscribe(users => {
         let invites = {};
         users.forEach(user => {
-          console.log(user);
           invites = {[user.$key] : true};
         });
 
-        console.log(invites);
         event.invitations = invites;
-        console.log(event.tags);
         this.eventService.saveEvent(event);
         this._router.navigateByUrl('/app/share');
       });
