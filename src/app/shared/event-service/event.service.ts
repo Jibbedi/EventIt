@@ -34,8 +34,8 @@ export class EventService {
       this.getListOfEvents().update(key, event)
     }
     else {
+      event.creatorId = this.userService.authToken;
       key = this.getListOfEvents().push(event).key;
-      console.log('else',key);
     }
 
 
@@ -127,7 +127,7 @@ export class EventService {
   }
 
   private filterPublicEvents(events) {
-    return events.filter(event => event.publicEvent);
+    return events.filter(event => event.publicEvent && event.creatorId != this.userService.authToken);
   }
 
   private getUserEventsForPath(path: string): Observable<Event[]> {

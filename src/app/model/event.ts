@@ -12,4 +12,5 @@ export class Event {
   name: string = '';
   imageDataUrl: string = '';
   publicEvent : boolean = true;
+  creatorId : string;
 }
