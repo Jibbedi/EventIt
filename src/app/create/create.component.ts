@@ -33,14 +33,14 @@ export class CreateComponent implements AfterViewInit {
   }
 
   private map;
-  private tags;
+  private eventTypes;
 
   formCreationStep = 0;
 
   createEventForm: FormGroup;
 
   constructor(private _locationService: LocationService, private _addressParsingService: AddressParsingService, private eventService: EventService, private _af: AngularFire, private _fb: FormBuilder, private _router : Router) {
-    this.tags = this._af.database.list('/tags');
+    this.eventTypes = this.eventService.getEventTypes();
 
     this.createEventForm = this._fb.group({
       eventName: ['', Validators.required],

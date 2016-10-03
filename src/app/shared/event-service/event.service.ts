@@ -59,6 +59,8 @@ export class EventService {
       });
     }
 
+    this._af.database.object('/eventTypes/').update({[event.type] : true});
+
 
     this._af.database.object('/users/' + this.userService.authToken + '/events').update({[key]: true});
 
@@ -102,6 +104,15 @@ export class EventService {
         .subscribe(events => observer.next(events));
     });
   }
+
+  getEventTypes(): Observable<string[]> {
+    return Observable.create(observer => {
+      this._af.database.list('/eventTypes').map(eventTypes => {
+        return eventTypes.map(eventType => eventType.$key);
+      }).subscribe(eventTypes => observer.next(eventTypes));
+    });
+  }
+
 
   getInvitationEventsForUser(): Observable<Event[]> {
     return this.getUserEventsForPath('/invitations');

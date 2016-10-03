@@ -79,8 +79,8 @@
                 <span>What kind of event?*</span>
                 <input formControlName="eventType" list="category" class="form-control">
                 <datalist id="category">
-                  <option *ngFor="let tag of tags | async">
-                    {{tag.$key}}
+                  <option *ngFor="let eventType of eventTypes | async">
+                    {{eventType}}
                   </option>
                 </datalist>
                 <error-messages [control]="createEventForm.get('eventType')"></error-messages>
