@@ -158,6 +158,7 @@ export class CreateComponent implements AfterViewInit {
         console.log(invites);
         event.invitations = invites;
         this.eventService.saveEvent(event);
+        this._router.navigateByUrl('/app/share');
       });
 
 
@@ -165,7 +166,7 @@ export class CreateComponent implements AfterViewInit {
     }
 
     this.eventService.saveEvent(event);
-    // this._router.navigateByUrl('/app/share');
+    this._router.navigateByUrl('/app/share');
 
   }
 
