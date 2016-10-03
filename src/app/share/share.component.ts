@@ -14,8 +14,14 @@ export class ShareComponent {
   invitedEvents : Observable<Event[]>;
   invitationsLoading = true;
 
+  createdEvents : Observable<Event[]>;
+  createdEventsLoading = true;
+
   constructor(private eventService : EventService) {
     this.invitedEvents = this.eventService.getInvitationEventsForUser();
     this.invitedEvents.subscribe(v => this.invitationsLoading = false);
+
+    this.createdEvents = this.eventService.getEventsForUser();
+    this.createdEvents.subscribe(v => this.createdEventsLoading = false);
   }
 }

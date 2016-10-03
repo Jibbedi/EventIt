@@ -87,11 +87,11 @@ export class EventService {
   }
 
   getInvitationEventsForUser(): Observable<Event[]> {
-    return this.getUserEventsForPath('/events');
+    return this.getUserEventsForPath('/invitations');
   }
 
   getEventsForUser(): Observable<Event[]> {
-    return this.getUserEventsForPath('/invitations');
+    return this.getUserEventsForPath('/events');
   }
 
   private filterPublicEvents(events) {

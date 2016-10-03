@@ -1,17 +1,21 @@
 <h5>My events</h5>
 <div class="col-xs-12 events">
 
-  <div class="event-wrapper" *ngFor="let event of invitedEvents | async">
+  <div class="event-wrapper" *ngFor="let event of createdEvents | async">
     <event [sharable]="true" [showParticipationButton]="false" [event]="event"></event>
   </div>
 
-  <div *ngIf="invitationsLoading">
-    Invitations are loading...
+  <div *ngIf="createdEventsLoading">
+    My events are loading...
+  </div>
+
+  <div *ngIf="!createdEventsLoading && (createdEvents | async)?.length == 0">
+    You haven't created any event yet. Switch to create tab to do so.
   </div>
 
 </div>
 
-<h5>Invitations</h5>
+<h5>My Invitations</h5>
 <div class="col-xs-12 events">
 
   <div class="event-wrapper" *ngFor="let event of invitedEvents | async">
@@ -19,7 +23,11 @@
   </div>
 
   <div *ngIf="invitationsLoading">
-    Invitations are loading...
+    My Invitations are loading...
+  </div>
+
+  <div *ngIf="!invitationsLoading && (invitedEvents | async)?.length == 0">
+    You haven't recieved an invitation yet. Tell your friends to start using EventIt.
   </div>
 
 </div>
