@@ -1,33 +1,58 @@
-<h5>My events</h5>
-<div class="col-xs-12 events">
+<div class="wrapper">
+  <h5>My events</h5>
+  <div class="col-xs-12 events">
 
-  <div class="event-wrapper" *ngFor="let event of createdEvents | async">
-    <event [sharable]="true" [showParticipationButton]="false" [event]="event"></event>
+    <div class="event-wrapper" *ngFor="let event of createdEvents | async">
+      <event [sharable]="true" [showParticipationButton]="false" [event]="event"></event>
+    </div>
+
+    <div *ngIf="createdEventsLoading">
+      My events are loading...
+    </div>
+
+    <div *ngIf="!createdEventsLoading && (createdEvents | async)?.length == 0">
+      You haven't created any event yet. Switch to create tab to do so.
+    </div>
+
   </div>
-
-  <div *ngIf="createdEventsLoading">
-    My events are loading...
-  </div>
-
-  <div *ngIf="!createdEventsLoading && (createdEvents | async)?.length == 0">
-    You haven't created any event yet. Switch to create tab to do so.
-  </div>
-
 </div>
 
-<h5>My Invitations</h5>
-<div class="col-xs-12 events">
+<div class="wrapper">
+  <h5>My Invitations</h5>
+  <div class="col-xs-12 events">
 
-  <div class="event-wrapper" *ngFor="let event of invitedEvents | async">
-    <event [sharable]="true" [event]="event"></event>
+    <div class="event-wrapper" *ngFor="let event of invitedEvents | async">
+      <event [sharable]="true" [event]="event"></event>
+    </div>
+
+    <div *ngIf="invitationsLoading">
+      My Invitations are loading...
+    </div>
+
+    <div *ngIf="!invitationsLoading && (invitedEvents | async)?.length == 0">
+      You haven't recieved an invitation yet. Tell your friends to start using EventIt.
+    </div>
+
   </div>
+</div>
 
-  <div *ngIf="invitationsLoading">
-    My Invitations are loading...
+<div class="wrapper">
+  <h5>My Participations</h5>
+  <div class="col-xs-12 events">
+
+    <div class="event-wrapper" *ngFor="let event of participationEvents | async">
+      <event [sharable]="true" [event]="event"></event>
+    </div>
+
+    <div *ngIf="participationsLoading">
+      My participations are loading...
+    </div>
+
+    <div *ngIf="!participationsLoading && (participationEvents | async)?.length == 0">
+      You don't participate in any event yet. Press the red participate button on any public event or your invitations
+      to
+      do so.
+    </div>
+
   </div>
-
-  <div *ngIf="!invitationsLoading && (invitedEvents | async)?.length == 0">
-    You haven't recieved an invitation yet. Tell your friends to start using EventIt.
-  </div>
-
 </div>

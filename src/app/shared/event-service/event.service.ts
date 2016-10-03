@@ -18,31 +18,47 @@ export class EventService {
   saveEvent(event: Event) {
     let key = event['$key'];
 
+    console.log(event);
 
     let tags = event.tags;
-    console.log(event.tags);
-    let tagObj = {};
-    tags.forEach(tag => {
-      tagObj[tag] = true;
-    });
-    event.tags = <any>tagObj;
-
+    if (tags) {
+      let tagObj = {};
+      tags.forEach(tag => {
+        tagObj[tag.trim()] = true;
+      });
+      event.tags = <any>tagObj;
+    }
 
     if (key) {
       delete event['$key'];
-      key = this.getListOfEvents().update(key, event).key;
-      return;
+      this.getListOfEvents().update(key, event)
+    }
+    else {
+      key = this.getListOfEvents().push(event).key;
+      console.log('else',key);
     }
 
-    key = this.getListOfEvents().push(event).key;
 
-
-    if (Object.keys(event.guests).length > 0) {
-      Object.keys(event.guests).forEach(userKey => {
-        console.log('setting event key', userKey);
-        this._af.database.object('/users/' + userKey + '/invitations/').update({[key]: false});
+    if (event.invitations) {
+      Object.keys(event.invitations).forEach(userKey => {
+        this._af.database.object('/users/' + userKey + '/invitations/').update({[key]: true});
       });
     }
+
+    if (event.participants) {
+      Object.keys(event.participants).forEach(userKey => {
+        console.log(event.participants);
+        if (event.participants[userKey] == true) {
+          console.log('true');
+          this._af.database.object('/users/' + userKey + '/participations/').update({[key] : true});
+        }
+        else {
+          console.log(false);
+          this._af.database.object('/users/' + userKey + '/participations/' + key).remove();
+        }
+      });
+    }
+
 
     this._af.database.object('/users/' + this.userService.authToken + '/events').update({[key]: true});
 
@@ -57,6 +73,7 @@ export class EventService {
     let key = event['$key'];
     if (!key) return;
     this._af.database.list('/events').remove(key);
+    this._af.database.object('/eventImages/' + key).remove();
     this._af.database.list('/users').subscribe(users => {
       users.forEach(user => {
         this._af.database.object('/users/' + user.$key + '/invitations/' + key).remove();
@@ -94,6 +111,10 @@ export class EventService {
     return this.getUserEventsForPath('/events');
   }
 
+  getParticipationEventsForUser(): Observable<Event[]> {
+    return this.getUserEventsForPath('/participations');
+  }
+
   private filterPublicEvents(events) {
     return events.filter(event => event.publicEvent);
   }
@@ -116,7 +137,7 @@ export class EventService {
         }
       });
 
-      let eventImage = this._af.database.object('/eventImages' + eventId.$key).subscribe(image => {
+      let eventImage = this._af.database.object('/eventImages/' + eventId.$key).subscribe(image => {
         eventObj['imageDataUrl'] = image['$value'];
       });
 

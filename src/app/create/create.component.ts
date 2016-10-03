@@ -150,14 +150,13 @@ export class CreateComponent implements AfterViewInit {
       });
 
       users.subscribe(users => {
-        console.log('test');
         let invites = {};
         users.forEach(user => {
           console.log(user);
           invites = {[user.$key] : false};
         });
         console.log(invites);
-        event.guests = invites;
+        event.invitations = invites;
         this.eventService.saveEvent(event);
       });
 

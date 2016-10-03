@@ -3,7 +3,8 @@ export class Event {
   description: string = '';
   startDate: string = '';
   endDate: string = '';
-  guests: {id : boolean}|{} = {};
+  participants: {id : boolean}|{} = {};
+  invitations: {id : boolean}|{} = {};
   tags: string[] = [];
   location: Address = new Address();
   host: string = '';

@@ -11,20 +11,20 @@ export class EventParticipationService {
 
 
   numberOfParticipants(event: Event): number {
-    if (!event.guests) return 0;
-    return Object.keys(event.guests).filter(key => event.guests[key] && event.guests[key] === true).length;
+    if (!event.participants) return 0;
+    return Object.keys(event.participants).filter(key => event.participants[key] && event.participants[key] === true).length;
   }
 
   isUserParticipatingInEvent(event: Event): boolean {
-    if (!event.guests) return false;
-    return event.guests[this._userService.authToken] === true;
+    if (!event.participants) return false;
+    return event.participants[this._userService.authToken] === true;
   }
 
 
   toggleParticipation(event: Event) {
-    if (!event.guests) event.guests = {};
-    event.guests[this._userService.authToken] = !this.isUserParticipatingInEvent(event);
-    console.log(event.guests);
+    if (!event.participants) event.participants = {};
+    event.participants[this._userService.authToken] = !this.isUserParticipatingInEvent(event);
+    console.log(event.participants);
     this.eventService.saveEvent(event);
   }
 

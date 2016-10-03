@@ -66,6 +66,10 @@ export class EventComponent {
     return `${numberOfParticipants} ${(numberOfParticipants == 1) ? 'Participant' : 'Participants'}`;
   }
 
+  getEventVisibility() {
+    return this.event.publicEvent ? 'Public' : 'Private';
+  }
+
   showTwitter(event) {
     this._twitterService.showModal(this.getTwitterText(),['udacity'],'jibbedi');
   }
