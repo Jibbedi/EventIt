@@ -3,7 +3,7 @@
   <div>
     <label for="email">
       <div class="text-xs-left">What username do you like?</div>
-      <input id="email" formControlName="email" class="form-control" type="email" placeholder="Username">
+      <input id="email" formControlName="email" class="form-control" type="email" placeholder="Username" autocomplete="email">
     </label>
   </div>
 
@@ -17,14 +17,14 @@
   <div *ngIf="!signUpForm.controls.showPassword.value">
     <label for="password">
       <div class="text-xs-left">Use a secure password.</div>
-      <input id="password" formControlName="password" class="form-control" type="password" placeholder="Password">
+      <input id="password" formControlName="password" class="form-control" type="password" placeholder="Password" autocomplete="password">
     </label>
   </div>
 
   <div *ngIf="signUpForm.controls.showPassword.value">
     <label for="visiblePassword">
       <div class="text-xs-left">Use a secure password.</div>
-      <input id="visiblePassword" formControlName="visiblePassword" class="form-control" type="text" placeholder="Password">
+      <input id="visiblePassword" formControlName="visiblePassword" class="form-control" type="text" placeholder="Password" autocomplete="password">
     </label>
   </div>
 
