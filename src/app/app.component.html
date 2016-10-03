@@ -1,9 +1,14 @@
-<div class="header">
+<nav class="header">
     <h2>EventIt</h2>
-    <div class="button-wrapper" *ngIf="isLoggedIn">
+    <div class="button-wrapper hidden-sm-down" *ngIf="isLoggedIn">
       <a [routerLink]="'/app'">Show Events</a>
       <a [routerLink]="'/userDetail'">Edit User Details</a>
       <a href="#" (click)="logout($event)">Logout</a>
     </div>
-</div>
+  <div class="button-wrapper hidden-md-up" *ngIf="isLoggedIn">
+    <a [routerLink]="'/app'"><i title="Show Events" class="fa fa-2x fa-th"></i></a>
+    <a [routerLink]="'/userDetail'"><i title="Edit User Details" class="fa fa-2x fa-user"></i></a>
+    <a href="#" (click)="logout($event)"><i title="Logout" class="fa fa-2x fa-sign-out"></i></a>
+  </div>
+</nav>
 <router-outlet></router-outlet>

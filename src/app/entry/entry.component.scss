@@ -34,7 +34,7 @@
   .selection-indicator {
     background: #000;
     height: 5px;
-    width: 200px;
+    width: 100px;
     transition: 1s all;
   }
 
@@ -46,13 +46,13 @@
 
   &.share {
     .selection-indicator {
-      margin-left: calc(50% - 100px);
+      margin-left: calc(50% - 62px);
     }
   }
 
   &.discover {
     .selection-indicator {
-      margin-left: calc(100% - 200px);
+      margin-left: calc(100% - 100px);
       margin-right: 0px;
     }
   }
