@@ -19,6 +19,7 @@ import {EventComponent} from "./event/event.component";
 import {EventService} from "./shared/event-service/event.service";
 import {EventParticipationService} from "./shared/event-participation-service/event-participation.service";
 import {ErrorMessagesComponent} from "./error-messages/error-messages.component";
+import {TwitterService} from "./shared/twitter-service/twitter.service";
 
 
 const routes = [
@@ -46,7 +47,7 @@ export const firebaseConfig = {
   imports: [BrowserModule, HttpModule, FormsModule,ReactiveFormsModule, RouterModule,RouterModule.forRoot(routes), AngularFireModule.initializeApp(firebaseConfig)],
   declarations: [AppComponent, LoginComponent, LandingComponent, SignupComponent,EntryComponent, CreateComponent, ShareComponent, DiscoverComponent, EventComponent, ErrorMessagesComponent],
   bootstrap: [AppComponent],
-  providers: [UserService, LocationService, AddressParsingService, EventService, EventParticipationService]
+  providers: [UserService, LocationService, AddressParsingService, EventService, EventParticipationService,TwitterService]
   })
 export class AppModule {
 }

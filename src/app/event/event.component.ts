@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 import {Event} from "../model/event";
 import {EventParticipationService} from "../shared/event-participation-service/event-participation.service";
+import {TwitterService} from "../shared/twitter-service/twitter.service";
 
 
 @Component({
@@ -24,7 +25,7 @@ export class EventComponent {
   @Input()
   showParticipationButton : boolean = true;
 
-  constructor(private _participationService: EventParticipationService) {
+  constructor(private _participationService: EventParticipationService, private _twitterService : TwitterService) {
   }
 
   getOptionalMessage(): string {
@@ -65,7 +66,7 @@ export class EventComponent {
   }
 
   showTwitter(event) {
-    window.open(`https://twitter.com/intent/tweet?text=${this.getTwitterText()}&hashtags=udacity&via=Jibbedi`,'_blank',"height=250,width=500");
+    this._twitterService.showModal(this.getTwitterText(),['udacity'],'jibbedi');
   }
 
   getTwitterText() : string {
