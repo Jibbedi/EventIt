@@ -17,3 +17,7 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 - Run npm install
 - There seems to be a bug in AngularFire2. Please add `import * as firebase from 'firebase';` on top of the file node_modules/angularfire2/angularfire2.d.ts.
 - Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
+
+
+##Notes
+The images used in this app are taken from [https://www.pexels.com/](https://www.pexels.com/).
