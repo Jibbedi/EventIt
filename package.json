@@ -28,7 +28,6 @@
     "zone.js": "^0.6.23"
   },
   "devDependencies": {
-    "@types/firebase": "^2.4.30",
     "@types/jasmine": "^2.2.30",
     "angular-cli": "1.0.0-beta.16",
     "codelyzer": "~0.0.26",
