@@ -1,10 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     selector: 'landing-component',
     templateUrl: 'landing.component.html',
-    styleUrls: ['landing.component.css']
+    styleUrls: ['landing.component.scss']
 })
 export class LandingComponent implements OnDestroy {
 

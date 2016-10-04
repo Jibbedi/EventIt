@@ -4,6 +4,8 @@ import {Observable} from "rxjs/Observable";
 import {Address} from "../../model/address";
 import {Event} from "../../model/event";
 import {UserService} from "../user-service/user.service";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/filter";
 
 @Injectable()
 export class EventService {
@@ -19,7 +21,7 @@ export class EventService {
     return new Promise((resolve, reject) => {
       let key = event['$key'];
 
-      console.log(event);
+      delete event['$exists'];
 
       let tags = event.tags;
       if (tags) {

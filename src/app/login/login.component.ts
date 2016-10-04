@@ -4,10 +4,9 @@ import {UserService} from "../shared/user-service/user.service";
 import {Router} from "@angular/router";
 
 @Component({
-  moduleId: module.id,
   selector: 'login',
   templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css']
+  styleUrls: ['login.component.scss']
 })
 export class LoginComponent implements OnInit {
 

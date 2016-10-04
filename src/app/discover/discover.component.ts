@@ -2,8 +2,9 @@ import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {LocationService} from "../shared/location-service/location.service";
 
 import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
-import "rxjs/add/observable/forkJoin"
-import "rxjs/add/operator/filter"
+import "rxjs/add/observable/forkJoin";
+import "rxjs/add/operator/filter";
+import "rxjs/add/operator/map";
 import {AddressParsingService} from "../shared/address-parsing-service/address-parsing.service";
 import {Address} from "../model/address";
 import {Event} from "../model/event";
@@ -14,10 +15,9 @@ import {EventService} from "../shared/event-service/event.service";
 declare var google;
 
 @Component({
-  moduleId: module.id,
   selector: 'app-discover',
   templateUrl: 'discover.component.html',
-  styleUrls: ['discover.component.css']
+  styleUrls: ['discover.component.scss']
 })
 export class DiscoverComponent {
 

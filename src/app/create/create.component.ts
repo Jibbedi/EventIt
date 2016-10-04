@@ -9,16 +9,17 @@ import {EventService} from "../shared/event-service/event.service";
 import {Event} from "../model/event";
 import {Router} from "@angular/router";
 import {UserService} from "../shared/user-service/user.service";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/take";
 
 
 declare var google;
 
 
 @Component({
-  moduleId: module.id,
   selector: 'app-create',
   templateUrl: 'create.component.html',
-  styleUrls: ['create.component.css']
+  styleUrls: ['create.component.scss']
 })
 
 export class CreateComponent implements AfterViewInit {

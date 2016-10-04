@@ -2,10 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
-    moduleId: module.id,
     selector: 'entry',
     templateUrl: 'entry.component.html',
-    styleUrls: ['entry.component.css']
+    styleUrls: ['entry.component.scss']
 })
 export class EntryComponent implements OnInit {
 

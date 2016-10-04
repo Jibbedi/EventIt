@@ -17,6 +17,8 @@ export class AddressParsingService {
     public getAddressFromPlace(place) {
         let userAddress = new Address();
 
+        if (!place || !place.address_components) return userAddress;
+
         for (let adressComponent of place.address_components) {
 
             let longName = adressComponent.long_name;

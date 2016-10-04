@@ -6,10 +6,9 @@ import {EventService} from "../shared/event-service/event.service";
 
 
 @Component({
-  moduleId: module.id,
   selector: 'event',
   templateUrl: 'event.component.html',
-  styleUrls: ['event.component.css']
+  styleUrls: ['event.component.scss']
 })
 export class EventComponent {
 

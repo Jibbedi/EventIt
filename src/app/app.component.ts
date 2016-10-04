@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import {AngularFire} from 'angularfire2'
 import {UserService} from "./shared/user-service/user.service";
 import {Router} from "@angular/router";
 
 @Component({
-  moduleId: module.id,
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css']
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
 

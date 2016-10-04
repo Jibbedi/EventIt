@@ -1,10 +1,10 @@
-import { EventItPage } from './app.po';
+import { MigrationProjectPage } from './app.po';
 
-describe('event-it App', function() {
-  let page: EventItPage;
+describe('migration-project App', function() {
+  let page: MigrationProjectPage;
 
   beforeEach(() => {
-    page = new EventItPage();
+    page = new MigrationProjectPage();
   });
 
   it('should display message saying app works', () => {

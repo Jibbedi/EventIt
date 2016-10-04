@@ -4,10 +4,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 
 @Component({
-  moduleId: module.id,
   selector: 'signup',
   templateUrl: 'signup.component.html',
-  styleUrls: ['signup.component.css']
+  styleUrls: ['signup.component.scss']
 })
 export class SignupComponent {
 

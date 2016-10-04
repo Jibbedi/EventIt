@@ -4,10 +4,9 @@ import {Observable} from "rxjs";
 import {Event} from '../model/event.ts';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-share',
   templateUrl: 'share.component.html',
-  styleUrls: ['share.component.css']
+  styleUrls: ['share.component.scss']
 })
 export class ShareComponent {
 

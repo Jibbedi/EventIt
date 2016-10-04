@@ -2,10 +2,9 @@ import {Component, OnInit, Input} from '@angular/core';
 import {FormGroup, AbstractControl} from "@angular/forms";
 
 @Component({
-  moduleId: module.id,
   selector: 'error-messages',
   templateUrl: 'error-messages.component.html',
-  styleUrls: ['error-messages.component.css']
+  styleUrls: ['error-messages.component.scss']
 })
 export class ErrorMessagesComponent {
 
