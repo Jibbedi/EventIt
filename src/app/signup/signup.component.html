@@ -3,7 +3,7 @@
   <div>
     <label for="email">
       <div class="text-xs-left">What's your email?</div>
-      <input id="email" formControlName="email" class="form-control" type="email" placeholder="foo@bar.com" autocomplete="email">
+      <input #input id="email" formControlName="email" class="form-control" type="email" placeholder="foo@bar.com" autocomplete="email">
     </label>
     <error-messages [control]="signUpForm.get('email')"></error-messages>
   </div>

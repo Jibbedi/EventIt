@@ -13,7 +13,7 @@
             <div>
               <label for="eventName">
                 <span>What's the name?*</span>
-                <input id="eventName" formControlName="eventName" placeholder="Give your event a name" class="form-control">
+                <input #input id="eventName" formControlName="eventName" placeholder="Give your event a name" class="form-control">
                 <error-messages [control]="createEventForm.get('eventName')"></error-messages>
               </label>
             </div>

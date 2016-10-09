@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ElementRef, QueryList, ViewChildren} from '@angular/core';
 import {LocationService} from "../shared/location-service/location.service";
 import {Address} from "../model/address";
 import {AddressParsingService} from "../shared/address-parsing-service/address-parsing.service";
@@ -28,6 +28,9 @@ export class CreateComponent implements AfterViewInit {
   imageUrl = '';
   selectedAddress: Address = null;
   eventCreated = false;
+
+  @ViewChildren('input')
+  inputElements : QueryList<ElementRef>;
 
   get uploadedImage(): string {
     if (this.imageUrl.length == 0) return null;
@@ -98,6 +101,8 @@ export class CreateComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+
+    this.inputElements.first.nativeElement.focus();
 
     this._locationService.getCurrentPositionOfUser().subscribe(userAddress => {
       this.setMapCenter(userAddress);

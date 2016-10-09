@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ElementRef, QueryList, ViewChildren} from '@angular/core';
 import {UserService} from "../shared/user-service/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -13,6 +13,9 @@ export class SignupComponent {
 
   signUpForm: FormGroup;
   signUpError;
+
+  @ViewChildren('input')
+  inputElements : QueryList<ElementRef>;
 
   constructor(fb: FormBuilder, private _userService: UserService, private _router: Router) {
 
@@ -56,5 +59,10 @@ export class SignupComponent {
     this.signUpForm.controls[first].valueChanges.subscribe(v => {
       this.signUpForm.controls[second].setValue(this.signUpForm.controls[first].value, {emitEvent: false});
     });
+  }
+
+  ngAfterViewInit() {
+    console.log(this.inputElements);
+    this.inputElements.first.nativeElement.focus();
   }
 }

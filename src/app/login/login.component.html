@@ -1,7 +1,7 @@
 <form [formGroup]="loginForm" (submit)="login()" autocomplete="on">
   <label for="email">
     <div class="text-xs-left">Email</div>
-    <input id="email" formControlName="email" class="form-control" type="email" placeholder="Your email address" autocomplete="email">
+    <input #input id="email" formControlName="email" class="form-control" type="email" placeholder="Your email address" autocomplete="email">
   </label>
   <label for="password">
     <div class="text-xs-left">Password</div>

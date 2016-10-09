@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ViewChildren, ElementRef, QueryList} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../shared/user-service/user.service";
 import {Router} from "@angular/router";
@@ -9,10 +9,13 @@ import {CustomValidators} from "../shared/CustomValidators";
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   loginForm: FormGroup;
   loginError;
+
+  @ViewChildren('input')
+  inputElements : QueryList<ElementRef>;
 
   constructor(fb: FormBuilder, private _userService: UserService, private _router : Router) {
     this.loginForm = fb.group({
@@ -38,6 +41,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.inputElements.first.nativeElement.focus();
   }
 
 }
