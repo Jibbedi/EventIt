@@ -52,8 +52,8 @@ export class CreateComponent implements AfterViewInit {
       eventName: ['', Validators.required],
       location: ['', Validators.required],
       dates: this._fb.array([
-        this.createDateFormGroup()
-      ]),
+        this.createDateFormGroup(true)
+      ], CustomValidators.endDateIsAfterStartDate),
       invitationGroup: this._fb.group({
         publicEvent: [true],
         inviteUsers: ['']
@@ -75,7 +75,7 @@ export class CreateComponent implements AfterViewInit {
       datesGroup.removeAt(1);
     }
     else {
-      datesGroup.push(this.createDateFormGroup());
+      datesGroup.push(this.createDateFormGroup(false));
     }
   }
 
@@ -93,11 +93,17 @@ export class CreateComponent implements AfterViewInit {
     return string;
   }
 
-  private createDateFormGroup(): FormGroup {
-    return this._fb.group({
+  private createDateFormGroup(includeValidator : boolean): FormGroup {
+    let group = this._fb.group({
       date: ["", Validators.compose([Validators.required, CustomValidators.isValidDate])],
       time: ["", Validators.compose([Validators.required, CustomValidators.isValidTime])]
-    })
+    });
+
+    if (includeValidator) {
+      group.validator = CustomValidators.dateIsAfterNow;
+    }
+
+    return group;
   }
 
   ngAfterViewInit() {

@@ -48,6 +48,7 @@ label {
 
 .datetime-wrapper {
   display: flex;
+  flex-wrap: wrap;
 
   label {
     min-width: 0;
@@ -60,6 +61,11 @@ label {
 
   .time {
     flex: 1;
+  }
+
+  error-messages {
+    flex: 1 0 100%;
+    margin-bottom: 5px;
   }
 }
 

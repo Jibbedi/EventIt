@@ -13,11 +13,11 @@ export class ErrorMessagesComponent {
   control: AbstractControl;
 
   getErrorKeys() {
+    if (!this.control.errors) return [];
     return Object.keys(this.control.errors);
   }
 
   getMessage(errorKey): string {
-    console.log(Object.keys(this.control.errors));
     switch (errorKey) {
       case 'required':
         return 'Field is required';
@@ -37,6 +37,10 @@ export class ErrorMessagesComponent {
         return 'Password needs to have at least one number';
       case 'noFulfillOfLengthRequirement':
         return 'Password needs to be at least 6 characters long';
+      case 'dateIsBeforeNow':
+        return 'The start date can not be in the past';
+      case 'endDateIsBeforeStartDate':
+        return 'The end date can not lay before the start date';
       default:
         return 'Unknown error';
     }
