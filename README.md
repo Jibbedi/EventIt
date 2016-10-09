@@ -9,6 +9,7 @@ The following frameworks and tools are being used:
 - SCSS
 - Twitter Bootstrap
 - FontAwesome
+- Moment.js
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.16.
 
