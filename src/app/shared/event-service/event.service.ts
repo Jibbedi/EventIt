@@ -23,6 +23,9 @@ export class EventService {
 
       delete event['$exists'];
 
+      let imageDataUrl = event.imageDataUrl;
+      delete event['imageDataUrl'];
+
       let tags = event.tags;
       if (tags) {
         let tagObj = {};
@@ -34,6 +37,7 @@ export class EventService {
 
       if (key) {
         delete event['$key'];
+
         this.getListOfEvents().update(key, event).then(v => resolve(true));
       }
       else {
@@ -44,7 +48,7 @@ export class EventService {
         this._af.database.object('/users/' + this.userService.authToken + '/events').update({[key]: true}).then(v => resolve(true));
         this._af.database.object('/eventTypes/').update({[event.type]: true});
 
-        if (event.imageDataUrl) {
+        if (imageDataUrl) {
           this._af.database.object(this.EVENT_IMAGES_LOCATION).update({[key]: event.imageDataUrl});
         }
 
