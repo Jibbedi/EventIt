@@ -3,8 +3,17 @@
   <div>
     <label for="email">
       <div class="text-xs-left">What's your email?</div>
-      <input id="email" formControlName="email" class="form-control" type="email" placeholder="Username" autocomplete="email">
+      <input id="email" formControlName="email" class="form-control" type="email" placeholder="foo@bar.com" autocomplete="email">
     </label>
+    <error-messages [control]="signUpForm.get('email')"></error-messages>
+  </div>
+
+  <div>
+    <label for="name">
+      <div class="text-xs-left">What's your name?</div>
+      <input id="name" formControlName="name" class="form-control" type="text" placeholder="John Doe" autocomplete="name">
+    </label>
+    <error-messages [control]="signUpForm.get('name')"></error-messages>
   </div>
 
   <!--<div>-->
@@ -19,6 +28,7 @@
       <div class="text-xs-left">Use a secure password.</div>
       <input id="password" formControlName="password" class="form-control" type="password" placeholder="Password" autocomplete="password">
     </label>
+    <error-messages [control]="signUpForm.get('password')"></error-messages>
   </div>
 
   <div *ngIf="signUpForm.controls.showPassword.value">
@@ -26,6 +36,7 @@
       <div class="text-xs-left">Use a secure password.</div>
       <input id="visiblePassword" formControlName="visiblePassword" class="form-control" type="text" placeholder="Password" autocomplete="password">
     </label>
+    <error-messages [control]="signUpForm.get('password')"></error-messages>
   </div>
 
 

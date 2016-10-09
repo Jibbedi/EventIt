@@ -27,6 +27,16 @@ export class ErrorMessagesComponent {
         return 'Please give a valid time, e.g. 23:10';
       case 'eventPrivateAndNoInvitations':
         return 'If your event is private, you must at least invite one user';
+      case 'noValidEmail':
+        return 'Please provide a valid email, e.g. foo@bar.com';
+      case 'noFulfillOfLowercaseLetterRequirement':
+        return 'Password needs to have at least one lowercase letter';
+      case 'noFulfillOfUppercaseLetterRequirement':
+        return 'Password needs to have at least one uppercase letter';
+      case 'noFulfillOfNumberRequirement':
+        return 'Password needs to have at least one number';
+      case 'noFulfillOfLengthRequirement':
+        return 'Password needs to be at least 6 characters long';
       default:
         return 'Unknown error';
     }

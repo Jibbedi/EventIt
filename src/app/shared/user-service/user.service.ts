@@ -60,7 +60,7 @@ export class UserService {
     return loginPromise;
   }
 
-  signUp(email: string, password: string): Promise<any> {
+  signUp(email: string, password: string, name : string): Promise<any> {
 
     let signUp = new Promise((resolve, reject) => {
       this._af.auth.createUser({email: email, password: password}).then(auth => {
@@ -68,8 +68,9 @@ export class UserService {
 
         let newUser = new User();
         newUser.email = email;
+        newUser.name = name;
         this.userData = newUser;
-        this._af.database.object('/users/' + this.authToken).update(newUser);
+        this._af.database.object('/users/' + this.authToken).set(newUser);
 
         this.userData['$key'] = this.authToken;
         this.setUserToLocalStorage();

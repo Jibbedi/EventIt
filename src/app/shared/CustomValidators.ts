@@ -26,4 +26,34 @@ export class CustomValidators {
     inviteUsersControl.setErrors(error);
     return error;
   }
+
+  static isValidEmail = (control: FormControl) => {
+    if (control.value.length == 0) return null;
+    return control.value.match(/^[^@]+?\@[^@\.]+?\.[A-Za-z]+?$/) ? null : {noValidEmail: true};
+  }
+
+  static passwordFullfillsLengthRequirements = (control: FormControl) => {
+    if (control.value.length == 0 ) return null;
+    let requirement = /.{6,}/;
+    return control.value.match(requirement) ? null : {noFulfillOfLengthRequirement: true};
+  }
+
+  static passwordFullfillsNumberRequirements = (control: FormControl) => {
+    if (control.value.length == 0 ) return null;
+    let requirement = /[0-9]/;
+    return control.value.match(requirement) ? null : {noFulfillOfNumberRequirement: true};
+  }
+
+  static passwordFullfillsUppercaseLetterRequirements = (control: FormControl) => {
+    if (control.value.length == 0 ) return null;
+    let requirement = /[A-Z]/;
+    return control.value.match(requirement) ? null : {noFulfillOfUppercaseLetterRequirement: true};
+  }
+
+  static passwordFullfillsLowercaseLetterRequirements = (control: FormControl) => {
+    if (control.value.length == 0 ) return null;
+    let requirement = /[a-z]/;
+    return control.value.match(requirement) ? null : {noFulfillOfLowercaseLetterRequirement: true};
+  }
+
 }
